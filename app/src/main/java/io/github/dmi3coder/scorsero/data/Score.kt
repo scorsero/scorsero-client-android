@@ -8,9 +8,9 @@ import android.arch.persistence.room.PrimaryKey
  * Created by dim3coder on 12:59 PM 7/2/17.
  */
 @Entity
-class Score {
+class Score() {
 
-  @PrimaryKey
+  @PrimaryKey(autoGenerate = true)
   var id: Int? = null
 
   var title: String? = null
@@ -26,7 +26,7 @@ class Score {
   var completionDate: Long? = null
 
   constructor(id: Int?, title: String?, description: String?, creationDate: Long?,
-      completed: Boolean?, completionDate: Long?) {
+      completed: Boolean?, completionDate: Long?) : this() {
     this.id = id
     this.title = title
     this.description = description

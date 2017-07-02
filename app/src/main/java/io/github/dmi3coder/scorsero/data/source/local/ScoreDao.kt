@@ -18,7 +18,8 @@ interface ScoreDao {
   @Query("SELECT * FROM score")
   fun getAll(): List<Score>
 
-  @Query("SELECT * FROM score WHERE creation_date BETWEEN :fromDate AND :toDate")
+  //TODO fix kotlin conflict with args
+  @Query("SELECT * FROM score WHERE creation_date BETWEEN :arg0 AND :arg1")
   fun getAllForDate(fromDate: Long, toDate: Long): Array<Score>
 
   @Insert(onConflict = OnConflictStrategy.FAIL)

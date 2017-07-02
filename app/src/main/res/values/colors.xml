@@ -1,6 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-  <color name="colorPrimary">#3F51B5</color>
-  <color name="colorPrimaryDark">#303F9F</color>
-  <color name="colorAccent">#FF4081</color>
+  <color name="colorPrimary">#4D4D4D</color>
+  <color name="colorPrimaryDark">#383838</color>
+  <color name="colorAccent">#FFEB3B</color>
+  <color name="colorBackground">#1F1F1F</color>
+
+  <color name="colorPrimaryList">#FFF9C4</color>
+  <color name="colorPrimaryListText">#4A4A4A</color>
+  
+  <color name="colorBottomSheet">#4A4A4A</color>
+  <color name="colorBottomSheetPrimaryText">@color/colorAccent</color>
+  <color name="colorBottomSheetSecondaryText">@android:color/white</color>
+
+  <color name="colorSecondaryBottomSheet">#6A6A6A</color>
+  <color name="colorSecondaryBottomSheetPrimaryText">@color/colorAccent</color>
+  <color name="colorSecondaryBottomSheetSecondaryText">@android:color/white</color>
+
 </resources>

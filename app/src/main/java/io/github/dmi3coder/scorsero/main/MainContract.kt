@@ -15,6 +15,6 @@ interface MainContract {
   }
 
   interface Presenter : BasePresenter {
-    fun refresh()
+    fun refreshScores()
   }
 }

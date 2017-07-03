@@ -5,6 +5,8 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import io.github.dmi3coder.scorsero.R
 import io.github.dmi3coder.scorsero.data.Score
+import kotlinx.android.synthetic.main.item_score.view.description
+import kotlinx.android.synthetic.main.item_score.view.title
 
 /**
  * Created by dim3coder on 12:43 PM 7/3/17.
@@ -17,15 +19,12 @@ class ScoreAdapter(val items: List<Score>) : RecyclerView.Adapter<ScoreViewHolde
   }
 
   override fun onBindViewHolder(holder: ScoreViewHolder?, position: Int) {
-
+    holder!!.itemView.title.text = items[position].title ?: "Empty item"
+    holder.itemView.description.text = items[position].description ?: "This score needs description"
   }
 
   override fun getItemCount(): Int = 20
 
 }
 
-class ScoreViewHolder : RecyclerView.ViewHolder {
-
-  constructor(itemView: ViewGroup) : super(itemView)
-
-}
+class ScoreViewHolder(itemView: ViewGroup) : RecyclerView.ViewHolder(itemView)

@@ -1,14 +1,14 @@
 package io.github.dmi3coder.scorsero
 
+import android.arch.lifecycle.LifecycleActivity
 import android.os.Bundle
-import android.support.v7.app.AppCompatActivity
 import android.widget.FrameLayout
 import com.bluelinelabs.conductor.Conductor
 import com.bluelinelabs.conductor.Router
 import com.bluelinelabs.conductor.RouterTransaction
 import io.github.dmi3coder.scorsero.main.MainController
 
-class MainActivity : AppCompatActivity() {
+class MainActivity : LifecycleActivity() {
 
   var router: Router? = null
 

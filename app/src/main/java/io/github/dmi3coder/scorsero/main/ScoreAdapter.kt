@@ -23,7 +23,7 @@ class ScoreAdapter(val items: List<Score>) : RecyclerView.Adapter<ScoreViewHolde
     holder.itemView.description.text = items[position].description ?: "This score needs description"
   }
 
-  override fun getItemCount(): Int = 20
+  override fun getItemCount(): Int = items.size
 
 }
 

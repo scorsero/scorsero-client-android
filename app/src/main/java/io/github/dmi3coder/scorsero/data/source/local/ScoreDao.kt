@@ -1,5 +1,6 @@
 package io.github.dmi3coder.scorsero.data.source.local
 
+import android.arch.lifecycle.LiveData
 import android.arch.persistence.room.Dao
 import android.arch.persistence.room.Delete
 import android.arch.persistence.room.Insert
@@ -16,7 +17,7 @@ import io.github.dmi3coder.scorsero.data.Score
 interface ScoreDao {
 
   @Query("SELECT * FROM score")
-  fun getAll(): List<Score>
+  fun getAll(): LiveData<List<Score>>
 
   //TODO fix kotlin conflict with args
   @Query("SELECT * FROM score WHERE creation_date BETWEEN :arg0 AND :arg1")

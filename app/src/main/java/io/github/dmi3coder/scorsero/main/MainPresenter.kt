@@ -1,19 +1,24 @@
 package io.github.dmi3coder.scorsero.main
 
+import io.github.dmi3coder.scorsero.MainApplication
+import io.github.dmi3coder.scorsero.data.source.local.ScoreDao
+
+
 /**
  * Created by dim3coder on 12:39 PM 7/3/17.
  */
-class MainPresenter : MainContract.Presenter {
+class MainPresenter(var view: MainContract.View) : MainContract.Presenter {
 
-  override fun prepare() {
-    TODO("not implemented")
-  }
+  var scoreDao: ScoreDao? = null
 
   override fun start() {
-    TODO("not implemented")
+    view.setPresenter(this)
+    scoreDao = MainApplication.scoreDatabase!!.scoreDao()
+    refreshScores()
   }
 
   override fun refreshScores() {
-    TODO("not implemented")
+    view.showScores(scoreDao!!.getAll())
   }
+
 }

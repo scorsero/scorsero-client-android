@@ -10,7 +10,6 @@ interface BaseContract {
   }
 
   interface BasePresenter {
-    fun prepare()
     fun start()
   }
 }

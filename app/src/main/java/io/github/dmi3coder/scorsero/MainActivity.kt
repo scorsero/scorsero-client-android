@@ -7,6 +7,7 @@ import com.bluelinelabs.conductor.Conductor
 import com.bluelinelabs.conductor.Router
 import com.bluelinelabs.conductor.RouterTransaction
 import io.github.dmi3coder.scorsero.main.MainController
+import io.github.dmi3coder.scorsero.main.MainPresenter
 
 class MainActivity : AppCompatActivity() {
 
@@ -18,7 +19,10 @@ class MainActivity : AppCompatActivity() {
     setContentView(container)
     router = Conductor.attachRouter(this, container, savedInstanceState)
     if (!router!!.hasRootController()) {
-      router!!.setRoot(RouterTransaction.with(MainController()))
+      val mainController = MainController()
+      val mainPresenter = MainPresenter(mainController)
+      router!!.setRoot(RouterTransaction.with(mainController))
+      mainPresenter.start()
     }
   }
 

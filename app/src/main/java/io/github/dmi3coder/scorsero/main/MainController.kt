@@ -17,6 +17,7 @@ import kotlinx.android.synthetic.main.controller_main.view.main_list
 class MainController : Controller(), MainContract.View {
 
   internal var view: View? = null
+  internal var presenter: Presenter? = null
 
   override fun onCreateView(inflater: LayoutInflater, container: ViewGroup): View {
     view = inflater.inflate(R.layout.controller_main, container, false)
@@ -24,7 +25,7 @@ class MainController : Controller(), MainContract.View {
   }
 
   override fun setPresenter(presenter: Presenter) {
-    TODO("not implemented")
+    this.presenter = presenter
   }
 
   override fun showScores(scores: LiveData<List<Score>>) {

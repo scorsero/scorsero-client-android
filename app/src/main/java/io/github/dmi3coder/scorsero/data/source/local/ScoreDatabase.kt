@@ -7,7 +7,7 @@ import io.github.dmi3coder.scorsero.data.Score
 /**
  * Created by dim3coder on 2:14 PM 7/2/17.
  */
-@Database(entities = arrayOf(Score::class), version = 1)
+@Database(entities = arrayOf(Score::class), version = 2)
 abstract class ScoreDatabase : RoomDatabase() {
   public abstract fun scoreDao(): ScoreDao
 

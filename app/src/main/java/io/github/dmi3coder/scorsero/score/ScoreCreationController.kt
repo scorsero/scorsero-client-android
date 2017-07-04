@@ -1,24 +1,39 @@
 package io.github.dmi3coder.scorsero.score
 
+import android.os.Bundle
 import android.support.design.widget.BottomSheetBehavior
+import android.view.LayoutInflater
 import android.view.View
+import android.view.ViewGroup
+import com.bluelinelabs.conductor.Controller
+import io.github.dmi3coder.scorsero.R
 import io.github.dmi3coder.scorsero.score.ScoreCreationContract.Presenter
 
 /**
  * Created by dim3coder on 6:49 PM 7/4/17.
  */
-class ScoreCreationController(
-    var bottomSheetBehavior: BottomSheetBehavior<View>) : ScoreCreationContract.View {
-
+class ScoreCreationController() : Controller(), ScoreCreationContract.View {
 
   internal var presenter: Presenter? = null
+  var bottomSheetBehavior : BottomSheetBehavior<View>? = null
+
+  constructor(bottomSheetBehavior: BottomSheetBehavior<View>) : this() {
+    this.bottomSheetBehavior = bottomSheetBehavior
+  }
+
+
+  override fun onCreateView(inflater: LayoutInflater, container: ViewGroup): View {
+    val view = inflater.inflate(R.layout.controller_score_starter, container, false)
+
+    return view
+  }
 
   override fun setPresenter(presenter: Presenter) {
     this.presenter = presenter
   }
 
   override fun setVisibility(visible: Boolean) {
-    bottomSheetBehavior.state =
+    bottomSheetBehavior?.state =
         if (visible) BottomSheetBehavior.STATE_HIDDEN else BottomSheetBehavior.STATE_EXPANDED
   }
 

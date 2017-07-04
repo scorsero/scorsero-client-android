@@ -15,6 +15,8 @@ class Score() {
 
   var title: String? = null
 
+  var priority: Int? = null
+
   var description: String? = null
 
   @ColumnInfo(name = "creation_date")

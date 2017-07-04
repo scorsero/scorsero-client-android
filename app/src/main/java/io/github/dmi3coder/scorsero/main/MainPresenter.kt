@@ -1,6 +1,7 @@
 package io.github.dmi3coder.scorsero.main
 
 import io.github.dmi3coder.scorsero.MainApplication
+import io.github.dmi3coder.scorsero.data.Score
 import io.github.dmi3coder.scorsero.data.source.local.ScoreDao
 
 
@@ -19,6 +20,10 @@ class MainPresenter(var view: MainContract.View) : MainContract.Presenter {
 
   override fun refreshScores() {
     view.showScores(scoreDao!!.getAll())
+  }
+
+  override fun removeScore(score: Score) {
+    scoreDao?.delete(score)
   }
 
 }

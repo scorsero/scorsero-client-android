@@ -31,7 +31,7 @@ class MainController : Controller(), MainContract.View {
   override fun showScores(scores: LiveData<List<Score>>) {
     scores.observeForever {
       view!!.main_list.layoutManager = LinearLayoutManager(activity)
-      view!!.main_list.adapter = ScoreAdapter(it!!)
+      view!!.main_list.adapter = ScoreAdapter(presenter!!, it!!)
     }
   }
 

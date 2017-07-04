@@ -1,31 +1,30 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
     tools:background="@color/colorBottomSheet"
-    tools:maxWidth="190dp"
     tools:gravity="bottom"
+    tools:maxWidth="190dp"
     >
 
   <!-- TODO: extract strings-->
   <TextView
-      android:id="@+id/textView"
       android:layout_width="wrap_content"
       android:layout_height="wrap_content"
       android:layout_marginStart="16dp"
       android:layout_marginTop="16dp"
+      android:text="Add new score to track:"
       android:textColor="@color/colorBottomSheetPrimaryText"
       android:textSize="19sp"
       tools:text="Add new score to track:"
-      android:text="Add new score to track:"
       />
 
   <!-- TODO: extract strings-->
   <EditText
+      android:id="@+id/title_field"
       android:layout_width="match_parent"
       android:layout_height="wrap_content"
       android:layout_marginEnd="16dp"
@@ -34,65 +33,64 @@
       android:backgroundTint="@android:color/white"
       android:hint="Title"
       android:textColorHint="@android:color/white"
-      android:id="@+id/editText"
       />
 
   <!-- TODO: extract strings-->
   <TextView
       android:layout_width="wrap_content"
       android:layout_height="wrap_content"
-      tools:text="Priority:"
-      android:text="Priority:"
-      android:textColor="@color/colorBottomSheetSecondaryText"
       android:layout_marginStart="16dp"
       android:layout_marginTop="16dp"
-      android:id="@+id/textView2"
+      android:text="Priority:"
+      android:textColor="@color/colorBottomSheetSecondaryText"
+      tools:text="Priority:"
       />
 
+  <!-- TODO: load elements dynamically -->
   <LinearLayout
       android:layout_width="match_parent"
       android:layout_height="wrap_content"
-      android:layout_marginStart="8dp"
       android:layout_marginEnd="8dp"
+      android:layout_marginStart="8dp"
       android:gravity="center"
       >
 
     <View
         android:layout_width="42dp"
         android:layout_height="42dp"
-        android:background="@color/colorBottomSheetSecondaryText"
         android:layout_margin="8dp"
-      />
+        android:background="@color/colorBottomSheetSecondaryText"
+        />
     <View
         android:layout_width="42dp"
         android:layout_height="42dp"
-        android:background="@color/colorBottomSheetSecondaryText"
         android:layout_margin="8dp"
-      />
+        android:background="@color/colorBottomSheetSecondaryText"
+        />
     <View
         android:layout_width="42dp"
         android:layout_height="42dp"
-        android:background="@color/colorBottomSheetSecondaryText"
         android:layout_margin="8dp"
-      />
+        android:background="@color/colorBottomSheetSecondaryText"
+        />
     <View
         android:layout_width="42dp"
         android:layout_height="42dp"
-        android:background="@color/colorBottomSheetSecondaryText"
         android:layout_margin="8dp"
-      />
+        android:background="@color/colorBottomSheetSecondaryText"
+        />
     <View
         android:layout_width="42dp"
         android:layout_height="42dp"
-        android:background="@color/colorBottomSheetSecondaryText"
         android:layout_margin="8dp"
-      />
+        android:background="@color/colorBottomSheetSecondaryText"
+        />
     <View
         android:layout_width="42dp"
         android:layout_height="42dp"
-        android:background="@color/colorBottomSheetSecondaryText"
         android:layout_margin="8dp"
-      />
+        android:background="@color/colorBottomSheetSecondaryText"
+        />
 
   </LinearLayout>
 

@@ -19,6 +19,14 @@ android {
       proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
     }
   }
+  packagingOptions {
+    exclude 'META-INF/NOTICE'
+    exclude 'META-INF/LICENSE'
+    exclude 'META-INF/notice'
+    exclude 'META-INF/notice.txt'
+    exclude 'META-INF/license'
+    exclude 'META-INF/license.txt'
+  }
 }
 
 dependencies {
@@ -41,9 +49,8 @@ dependencies {
   implementation 'io.reactivex.rxjava2:rxjava:2.1.1'
   implementation 'com.bluelinelabs:conductor:2.1.3'
   implementation 'com.google.dagger:dagger:2.11'
-  implementation 'com.google.code.gson:gson:2.8.1'
   implementation 'com.squareup.retrofit2:retrofit:2.3.0'
-  implementation 'com.squareup.retrofit2:converter-gson:2.3.0'
+  implementation 'com.squareup.retrofit2:converter-jackson:2.3.0'
   implementation 'com.jakewharton.timber:timber:4.5.1'
   implementation 'com.github.bumptech.glide:glide:4.0.0-RC1'
   annotationProcessor 'com.github.bumptech.glide:compiler:4.0.0-RC1'

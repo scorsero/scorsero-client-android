@@ -20,6 +20,7 @@ interface ScoreCreationContract {
   }
 
   interface Presenter : BasePresenter {
+    fun start(score: Score)
     fun processScore(scoreData: Score?, state: ViewState)
 
   }

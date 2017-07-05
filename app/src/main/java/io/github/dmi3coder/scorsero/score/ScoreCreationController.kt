@@ -9,6 +9,7 @@ import com.bluelinelabs.conductor.Controller
 import io.github.dmi3coder.scorsero.R
 import io.github.dmi3coder.scorsero.data.Score
 import io.github.dmi3coder.scorsero.score.ScoreCreationContract.Presenter
+import io.github.dmi3coder.scorsero.score.ScoreCreationContract.ViewState.CLOSED
 import kotlinx.android.synthetic.main.controller_score_starter.view.title_field
 
 /**
@@ -19,6 +20,7 @@ class ScoreCreationController() : Controller(), ScoreCreationContract.View, OnCl
   internal var presenter: Presenter? = null
   var bottomSheetBehavior: BottomSheetBehavior<View>? = null
   internal var view: View? = null
+  var operationScore: Score? = null
 
   constructor(bottomSheetBehavior: BottomSheetBehavior<View>) : this() {
     this.bottomSheetBehavior = bottomSheetBehavior
@@ -40,6 +42,7 @@ class ScoreCreationController() : Controller(), ScoreCreationContract.View, OnCl
   }
 
   override fun setScore(scoreData: Score?) {
+    operationScore = scoreData
     scoreToState(scoreData)
   }
 
@@ -50,10 +53,19 @@ class ScoreCreationController() : Controller(), ScoreCreationContract.View, OnCl
 
 
   override fun clear() {
-    TODO("not implemented")
+    activity?.runOnUiThread {
+      view!!.title_field.text = null
+    }
   }
 
   override fun onClick(v: View?) {
+    if (bottomSheetBehavior!!.state != BottomSheetBehavior.STATE_HIDDEN) {
+      operationScore!!.title = view?.title_field?.text.toString()
+      Thread {
+        presenter!!.processScore(operationScore, CLOSED)
+      }.start()
+      bottomSheetBehavior!!.state = BottomSheetBehavior.STATE_HIDDEN
+    }
     bottomSheetBehavior!!.state = BottomSheetBehavior.STATE_EXPANDED
   }
 

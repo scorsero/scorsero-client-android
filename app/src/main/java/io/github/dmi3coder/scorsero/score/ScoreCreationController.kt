@@ -1,17 +1,20 @@
 package io.github.dmi3coder.scorsero.score
 
 import android.content.Context
+import android.content.res.Resources
 import android.support.design.widget.BottomSheetBehavior
 import android.view.LayoutInflater
 import android.view.View
 import android.view.View.OnClickListener
 import android.view.ViewGroup
 import android.view.inputmethod.InputMethodManager
+import android.widget.LinearLayout
 import com.bluelinelabs.conductor.Controller
 import io.github.dmi3coder.scorsero.R
 import io.github.dmi3coder.scorsero.data.Score
 import io.github.dmi3coder.scorsero.score.ScoreCreationContract.Presenter
 import io.github.dmi3coder.scorsero.score.ScoreCreationContract.ViewState.CLOSED
+import kotlinx.android.synthetic.main.controller_score_starter.view.priority_holder
 import kotlinx.android.synthetic.main.controller_score_starter.view.title_field
 
 
@@ -25,6 +28,7 @@ class ScoreCreationController() : Controller(), ScoreCreationContract.View, OnCl
   internal var view: View? = null
   var operationScore: Score? = null
 
+
   constructor(bottomSheetBehavior: BottomSheetBehavior<View>) : this() {
     this.bottomSheetBehavior = bottomSheetBehavior
   }
@@ -32,6 +36,8 @@ class ScoreCreationController() : Controller(), ScoreCreationContract.View, OnCl
 
   override fun onCreateView(inflater: LayoutInflater, container: ViewGroup): View {
     view = inflater.inflate(R.layout.controller_score_starter, container, false)
+
+    fillPriorityHolder(view!!.priority_holder)
     return view!!
   }
 
@@ -54,6 +60,25 @@ class ScoreCreationController() : Controller(), ScoreCreationContract.View, OnCl
     view!!.title_field.setText(scoreData?.title)
   }
 
+  fun fillPriorityHolder(view: LinearLayout) {
+    priorities.forEach {
+      view.addView(
+          View(activity).apply {
+            val drawable = activity!!.getDrawable(R.drawable.shape_priority_circle)
+            drawable.setTint(activity!!.getColor(it.second))
+            background = drawable
+            this.setOnClickListener { v ->
+              for(i in 0.rangeTo(view.childCount-1)){
+                view.getChildAt(i).elevation = 0f
+              }
+              v.elevation = 10f
+              operationScore?.priority = it.first
+            }
+          },
+          LinearLayout.LayoutParams(42.px, 42.px).apply { setMargins(8.px, 8.px, 8.px, 8.px) })
+    }
+  }
+
 
   override fun clear() {
     activity?.runOnUiThread {
@@ -74,4 +99,20 @@ class ScoreCreationController() : Controller(), ScoreCreationContract.View, OnCl
     bottomSheetBehavior!!.state = BottomSheetBehavior.STATE_EXPANDED
   }
 
+  companion object {
+    //TODO: come up with priorities colors
+    val priorities: Array<Pair<Int, Int>> = arrayOf(
+        Pair(1, android.R.color.holo_red_dark),
+        Pair(2, android.R.color.holo_green_dark),
+        Pair(3, android.R.color.holo_blue_light),
+        Pair(4, android.R.color.holo_blue_bright),
+        Pair(5, android.R.color.holo_blue_dark),
+        Pair(6, android.R.color.holo_orange_light)
+    )
+  }
 }
+
+val Int.dp: Int
+  get() = (this / Resources.getSystem().displayMetrics.density).toInt()
+val Int.px: Int
+  get() = (this * Resources.getSystem().displayMetrics.density).toInt()

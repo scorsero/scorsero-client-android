@@ -30,6 +30,7 @@
       android:layout_marginEnd="16dp"
       android:layout_marginStart="8dp"
       android:layout_marginTop="12dp"
+      android:textColor="@android:color/white"
       android:backgroundTint="@android:color/white"
       android:hint="Title"
       android:textColorHint="@android:color/white"

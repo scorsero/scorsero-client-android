@@ -1,16 +1,19 @@
 package io.github.dmi3coder.scorsero.score
 
+import android.content.Context
 import android.support.design.widget.BottomSheetBehavior
 import android.view.LayoutInflater
 import android.view.View
 import android.view.View.OnClickListener
 import android.view.ViewGroup
+import android.view.inputmethod.InputMethodManager
 import com.bluelinelabs.conductor.Controller
 import io.github.dmi3coder.scorsero.R
 import io.github.dmi3coder.scorsero.data.Score
 import io.github.dmi3coder.scorsero.score.ScoreCreationContract.Presenter
 import io.github.dmi3coder.scorsero.score.ScoreCreationContract.ViewState.CLOSED
 import kotlinx.android.synthetic.main.controller_score_starter.view.title_field
+
 
 /**
  * Created by dim3coder on 6:49 PM 7/4/17.
@@ -58,13 +61,15 @@ class ScoreCreationController() : Controller(), ScoreCreationContract.View, OnCl
     }
   }
 
-  override fun onClick(v: View?) {
+  override fun onClick(v: View) {
     if (bottomSheetBehavior!!.state != BottomSheetBehavior.STATE_HIDDEN) {
       operationScore!!.title = view?.title_field?.text.toString()
       Thread {
         presenter!!.processScore(operationScore, CLOSED)
       }.start()
       bottomSheetBehavior!!.state = BottomSheetBehavior.STATE_HIDDEN
+      val imm = activity?.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+      imm.hideSoftInputFromWindow(v.windowToken, 0)
     }
     bottomSheetBehavior!!.state = BottomSheetBehavior.STATE_EXPANDED
   }

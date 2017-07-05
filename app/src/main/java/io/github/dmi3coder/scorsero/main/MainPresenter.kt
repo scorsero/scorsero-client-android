@@ -23,7 +23,9 @@ class MainPresenter(var view: MainContract.View) : MainContract.Presenter {
   }
 
   override fun removeScore(score: Score) {
-    scoreDao?.delete(score)
+    Thread{
+      scoreDao?.delete(score)
+    }.start()
   }
 
 }

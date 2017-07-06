@@ -9,6 +9,7 @@ import android.view.View.OnClickListener
 import android.view.ViewGroup
 import android.view.inputmethod.InputMethodManager
 import android.widget.LinearLayout
+import android.widget.Toast
 import com.bluelinelabs.conductor.Controller
 import io.github.dmi3coder.scorsero.R
 import io.github.dmi3coder.scorsero.data.Score
@@ -68,7 +69,7 @@ class ScoreCreationController() : Controller(), ScoreCreationContract.View, OnCl
             drawable.setTint(activity!!.getColor(it.second))
             background = drawable
             this.setOnClickListener { v ->
-              for(i in 0.rangeTo(view.childCount-1)){
+              for (i in 0.rangeTo(view.childCount - 1)) {
                 view.getChildAt(i).elevation = 0f
               }
               v.elevation = 10f
@@ -88,15 +89,27 @@ class ScoreCreationController() : Controller(), ScoreCreationContract.View, OnCl
 
   override fun onClick(v: View) {
     if (bottomSheetBehavior!!.state != BottomSheetBehavior.STATE_HIDDEN) {
+      if (!validateFields()) return
+      val imm = activity?.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+      imm.hideSoftInputFromWindow(v.windowToken, 0)
       operationScore!!.title = view?.title_field?.text.toString()
       Thread {
         presenter!!.processScore(operationScore, CLOSED)
       }.start()
       bottomSheetBehavior!!.state = BottomSheetBehavior.STATE_HIDDEN
-      val imm = activity?.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
-      imm.hideSoftInputFromWindow(v.windowToken, 0)
     }
     bottomSheetBehavior!!.state = BottomSheetBehavior.STATE_EXPANDED
+  }
+
+  fun validateFields(): Boolean {
+    if (view!!.title_field.text.trim().isEmpty()) {
+      Toast.makeText(activity, "Field must not be empty", Toast.LENGTH_SHORT).show()
+      view!!.requestFocus()
+      val imm = activity?.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+      imm.showSoftInput(view!!.title_field, 0)
+      return false
+    }
+    return true
   }
 
   companion object {

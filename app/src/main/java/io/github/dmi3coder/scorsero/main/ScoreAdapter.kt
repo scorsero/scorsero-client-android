@@ -1,5 +1,6 @@
 package io.github.dmi3coder.scorsero.main
 
+import android.graphics.Paint
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.ViewGroup
@@ -22,7 +23,13 @@ class ScoreAdapter(val presenter: Presenter,
 
   override fun onBindViewHolder(holder: ScoreViewHolder?, position: Int) {
     holder!!.itemView.title.text = items[position].title ?: "Empty item"
+    if (items[position].completed ?: false) {
+      holder.itemView.title.paintFlags += Paint.STRIKE_THRU_TEXT_FLAG
+    }
     holder.itemView.description.text = items[position].description ?: "This score needs description"
+    holder.itemView.setOnClickListener {
+      presenter.readScore(items[position])
+    }
     holder.itemView.setOnLongClickListener {
       presenter.removeScore(items[position])
       true

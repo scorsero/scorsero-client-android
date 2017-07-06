@@ -22,8 +22,15 @@ class MainPresenter(var view: MainContract.View) : MainContract.Presenter {
     view.showScores(scoreDao!!.getAll())
   }
 
+  override fun readScore(score: Score) {
+    score.completed = true
+    Thread {
+      scoreDao?.update(score)
+    }.start()
+  }
+
   override fun removeScore(score: Score) {
-    Thread{
+    Thread {
       scoreDao?.delete(score)
     }.start()
   }

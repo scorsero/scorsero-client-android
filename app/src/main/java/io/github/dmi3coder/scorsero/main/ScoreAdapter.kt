@@ -32,7 +32,7 @@ class ScoreAdapter(val presenter: Presenter,
     itemView.apply {
       description.text = items[position].description ?: "This score needs description"
       setOnClickListener {
-        presenter.readScore(items[position])
+        presenter.completeScore(items[position])
       }
       setOnLongClickListener {
         presenter.removeScore(items[position])

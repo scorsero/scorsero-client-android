@@ -22,7 +22,7 @@ class MainPresenter(var view: MainContract.View) : MainContract.Presenter {
     view.showScores(scoreDao!!.getAll())
   }
 
-  override fun readScore(score: Score) {
+  override fun completeScore(score: Score) {
     score.completed = score.completed?.not()
     if(score.completed!!){
       score.completionDate = System.currentTimeMillis()

@@ -39,7 +39,7 @@ class ScoreCreationController() : Controller(), ScoreCreationContract.View, OnCl
 
   override fun onCreateView(inflater: LayoutInflater, container: ViewGroup): View {
     view = inflater.inflate(R.layout.controller_score_starter, container, false)
-
+    view?.setOnClickListener {  } //TODO move this to other place
     fillPriorityHolder(view!!.priority_holder)
     return view!!
   }

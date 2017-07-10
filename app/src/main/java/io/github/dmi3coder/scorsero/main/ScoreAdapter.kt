@@ -23,16 +23,21 @@ class ScoreAdapter(val presenter: Presenter,
 
   override fun onBindViewHolder(holder: ScoreViewHolder?, position: Int) {
     holder!!.itemView.title.text = items[position].title ?: "Empty item"
+    val itemView = holder.itemView
     if (items[position].completed ?: false) {
-      holder.itemView.title.paintFlags += Paint.STRIKE_THRU_TEXT_FLAG
+      itemView.title.paintFlags += Paint.STRIKE_THRU_TEXT_FLAG
+    } else {
+      itemView.title.paintFlags = 0
     }
-    holder.itemView.description.text = items[position].description ?: "This score needs description"
-    holder.itemView.setOnClickListener {
-      presenter.readScore(items[position])
-    }
-    holder.itemView.setOnLongClickListener {
-      presenter.removeScore(items[position])
-      true
+    itemView.apply {
+      description.text = items[position].description ?: "This score needs description"
+      setOnClickListener {
+        presenter.readScore(items[position])
+      }
+      setOnLongClickListener {
+        presenter.removeScore(items[position])
+        true
+      }
     }
   }
 

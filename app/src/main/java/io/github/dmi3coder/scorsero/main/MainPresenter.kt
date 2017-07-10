@@ -23,7 +23,10 @@ class MainPresenter(var view: MainContract.View) : MainContract.Presenter {
   }
 
   override fun readScore(score: Score) {
-    score.completed = true
+    score.completed = score.completed?.not()
+    if(score.completed!!){
+      score.completionDate = System.currentTimeMillis()
+    }
     Thread {
       scoreDao?.update(score)
     }.start()

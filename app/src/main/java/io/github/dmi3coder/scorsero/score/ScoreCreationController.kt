@@ -2,6 +2,8 @@ package io.github.dmi3coder.scorsero.score
 
 import android.content.Context
 import android.content.res.Resources
+import android.graphics.Color
+import android.graphics.drawable.GradientDrawable
 import android.support.design.widget.BottomSheetBehavior
 import android.view.LayoutInflater
 import android.view.View
@@ -66,13 +68,14 @@ class ScoreCreationController() : Controller(), ScoreCreationContract.View, OnCl
       view.addView(
           View(activity).apply {
             val drawable = activity!!.getDrawable(R.drawable.shape_priority_circle)
-            drawable.setTint(activity!!.getColor(it.second))
-            background = drawable
-            this.setOnClickListener { v ->
+            this.background = drawable
+            this.setColors(activity!!.getColor(it.second), 0)
+            this.setOnClickListener { _ ->
               for (i in 0.rangeTo(view.childCount - 1)) {
-                view.getChildAt(i).elevation = 0f
+                view.getChildAt(i).setColors(
+                    activity!!.getColor(ScoreCreationController.priorities[i].second), 0)
               }
-              v.elevation = 10f
+              this.setColors(activity!!.getColor(it.second), Color.YELLOW)
               operationScore?.priority = it.first
             }
           },
@@ -129,3 +132,8 @@ val Int.dp: Int
   get() = (this / Resources.getSystem().displayMetrics.density).toInt()
 val Int.px: Int
   get() = (this * Resources.getSystem().displayMetrics.density).toInt()
+
+fun View.setColors(fillColor: Int, strokeColor: Int) {
+  (background as GradientDrawable).setStroke(2, strokeColor)
+  (background as GradientDrawable).setColor(fillColor)
+}

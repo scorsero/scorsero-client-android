@@ -23,8 +23,8 @@ class MainPresenter(var view: MainContract.View) : MainContract.Presenter {
   }
 
   override fun completeScore(score: Score) {
-    score.completed = score.completed?.not()
-    if(score.completed!!){
+    score.completed = !(score.completed ?: false)
+    if (score.completed!!) {
       score.completionDate = System.currentTimeMillis()
     }
     Thread {

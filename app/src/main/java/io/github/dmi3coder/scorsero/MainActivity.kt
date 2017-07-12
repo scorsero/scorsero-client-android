@@ -28,6 +28,7 @@ class MainActivity : AppCompatActivity() {
 
     bottomSheetBehavior = BottomSheetBehavior.from(bottom_sheet_frame)
     bottomSheetBehavior?.isHideable = true
+    bottomSheetBehavior?.state = BottomSheetBehavior.STATE_HIDDEN
     val scoreStarterController = ScoreCreationController(bottomSheetBehavior!!)
     val scoreStarterPresenter = ScoreCreationPresenter(scoreStarterController)
     main_starter_fab.setOnClickListener(scoreStarterController)

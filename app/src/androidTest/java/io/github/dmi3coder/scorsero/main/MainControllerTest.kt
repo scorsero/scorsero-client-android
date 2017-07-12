@@ -2,8 +2,9 @@ package io.github.dmi3coder.scorsero.main
 
 import android.support.test.espresso.Espresso.onView
 import android.support.test.espresso.action.ViewActions.click
-import android.support.test.espresso.action.ViewActions.closeSoftKeyboard
+import android.support.test.espresso.action.ViewActions.longClick
 import android.support.test.espresso.action.ViewActions.replaceText
+import android.support.test.espresso.assertion.ViewAssertions.doesNotExist
 import android.support.test.espresso.assertion.ViewAssertions.matches
 import android.support.test.espresso.matcher.ViewMatchers.isDisplayed
 import android.support.test.espresso.matcher.ViewMatchers.withClassName
@@ -49,13 +50,41 @@ class MainControllerTest {
   @Test
   fun mainController_onAddTask_displayed() {
     val testString = "Test text ${Math.random()}"
+    createScore(testString)
+
+    val textView = onView(allOf(withId(R.id.title), withText(testString), isDisplayed()))
+    textView.check(matches(withText(testString)))
+  }
+
+  @Test
+  fun mainController_onAddTwoTask_displayed() {
+    val stringArray = arrayOf("first score ${Math.random()}", "second score ${Math.random()}")
+    stringArray.forEach(this::createScore)
+    stringArray.forEach {
+      val textView = onView(allOf(withId(R.id.title), withText(it), isDisplayed()))
+      textView.check(matches(withText(it)))
+    }
+  }
+
+  @Test
+  fun mainController_onRemoveTask_removed() {
+    val testString = "Test text ${Math.random()}"
+    createScore(testString)
+    val textView = onView(allOf(withId(R.id.title), withText(testString), isDisplayed()))
+    textView.check(matches(withText(testString)))
+    textView.perform(longClick())
+    textView.check(doesNotExist())
+  }
+
+  //TODO implement checking over the current screen
+
+  fun createScore(testString: String) {
     val floatingActionButton = onView(allOf(withId(R.id.main_starter_fab),
         childAtPosition(childAtPosition(withId(android.R.id.content), 0), 2), isDisplayed()))
     floatingActionButton.perform(click())
 
-    val appCompatEditText = onView(allOf(withId(R.id.title_field),
-        childAtPosition(childAtPosition(withId(R.id.bottom_sheet_frame), 0), 1), isDisplayed()))
-    appCompatEditText.perform(replaceText(testString), closeSoftKeyboard())
+    val appCompatEditText = onView(withId(R.id.title_field))
+    appCompatEditText.perform(replaceText(testString))
 
     val view = onView(allOf(childAtPosition(allOf(withId(R.id.priority_holder),
         childAtPosition(withClassName(`is`("android.widget.LinearLayout")), 3)), 0), isDisplayed()))
@@ -64,9 +93,6 @@ class MainControllerTest {
     val floatingActionButton2 = onView(allOf(withId(R.id.main_starter_fab),
         childAtPosition(childAtPosition(withId(android.R.id.content), 0), 2), isDisplayed()))
     floatingActionButton2.perform(click())
-
-    val textView = onView(allOf(withId(R.id.title), withText(testString), isDisplayed()))
-    textView.check(matches(withText(testString)))
   }
 
   private fun childAtPosition(parentMatcher: Matcher<View>,

@@ -65,8 +65,7 @@ class MainControllerTest {
         childAtPosition(childAtPosition(withId(android.R.id.content), 0), 2), isDisplayed()))
     floatingActionButton2.perform(click())
 
-    val textView = onView(allOf(withId(R.id.title), withText(testString),
-        childAtPosition(childAtPosition(withId(R.id.main_list), 0), 0), isDisplayed()))
+    val textView = onView(allOf(withId(R.id.title), withText(testString), isDisplayed()))
     textView.check(matches(withText(testString)))
   }
 

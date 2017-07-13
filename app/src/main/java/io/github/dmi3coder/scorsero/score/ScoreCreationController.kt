@@ -5,6 +5,7 @@ import android.content.res.Resources
 import android.graphics.Color
 import android.graphics.drawable.GradientDrawable
 import android.support.design.widget.BottomSheetBehavior
+import android.support.design.widget.BottomSheetBehavior.BottomSheetCallback
 import android.view.LayoutInflater
 import android.view.View
 import android.view.View.OnClickListener
@@ -34,12 +35,24 @@ class ScoreCreationController() : Controller(), ScoreCreationContract.View, OnCl
 
   constructor(bottomSheetBehavior: BottomSheetBehavior<View>) : this() {
     this.bottomSheetBehavior = bottomSheetBehavior
+    bottomSheetBehavior.setBottomSheetCallback(object : BottomSheetCallback() {
+      override fun onSlide(bottomSheet: View, slideOffset: Float) {
+      }
+
+      override fun onStateChanged(bottomSheet: View, newState: Int) {
+        if (newState == BottomSheetBehavior.STATE_HIDDEN) {
+          val imm = activity?.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+          imm.hideSoftInputFromWindow(bottomSheet.windowToken, 0)
+        }
+      }
+
+    })
   }
 
 
   override fun onCreateView(inflater: LayoutInflater, container: ViewGroup): View {
     view = inflater.inflate(R.layout.controller_score_starter, container, false)
-    view?.setOnClickListener {  } //TODO move this to other place
+    view?.setOnClickListener { } //TODO move this to other place
     fillPriorityHolder(view!!.priority_holder)
     return view!!
   }
@@ -93,8 +106,7 @@ class ScoreCreationController() : Controller(), ScoreCreationContract.View, OnCl
   override fun onClick(v: View) {
     if (bottomSheetBehavior!!.state != BottomSheetBehavior.STATE_HIDDEN) {
       if (!validateFields()) return
-      val imm = activity?.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
-      imm.hideSoftInputFromWindow(v.windowToken, 0)
+
       operationScore!!.title = view?.title_field?.text.toString()
       Thread {
         presenter!!.processScore(operationScore, CLOSED)

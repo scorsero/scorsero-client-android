@@ -16,7 +16,9 @@ import android.support.test.runner.AndroidJUnit4
 import android.view.View
 import android.view.ViewGroup
 import io.github.dmi3coder.scorsero.MainActivity
+import io.github.dmi3coder.scorsero.MainApplication
 import io.github.dmi3coder.scorsero.R
+import junit.framework.Assert
 import junit.framework.TestCase.assertNotNull
 import org.hamcrest.CoreMatchers.`is`
 import org.hamcrest.CoreMatchers.allOf
@@ -27,6 +29,7 @@ import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
+import kotlin.test.assertTrue
 
 /**
  * Created by dim3coder on 8:12 AM 7/12/17.
@@ -78,7 +81,7 @@ class MainControllerTest {
   }
 
   @Test
-  fun mainController_onCreateTasksWithDifferCircles_noCrashes(){
+  fun mainController_onCreateTasksWithDifferCircles_noCrashes() {
     val floatingActionButton = onView(allOf(withId(R.id.main_starter_fab),
         childAtPosition(childAtPosition(withId(android.R.id.content), 0), 2), isDisplayed()))
     floatingActionButton.perform(click())
@@ -130,6 +133,20 @@ class MainControllerTest {
     val floatingActionButton6 = onView(allOf(withId(R.id.main_starter_fab),
         childAtPosition(childAtPosition(withId(android.R.id.content), 0), 2), isDisplayed()))
     floatingActionButton6.perform(click())
+  }
+
+  @Test
+  fun mainController_clickOnScore_scoreRead() {
+    val testString = "Test text ${Math.random()}"
+    createScore(testString)
+    onView(withText(testString))
+        .perform(click())
+    val value = MainApplication.scoreDatabase!!.scoreDao().getAll()
+    Assert.assertNotNull(value)
+    val testScore =
+        value.find { it.title == testString }
+    assertNotNull(testScore)
+    assertTrue { testScore!!.completed!! }
   }
 
   //TODO implement checking over the current screen

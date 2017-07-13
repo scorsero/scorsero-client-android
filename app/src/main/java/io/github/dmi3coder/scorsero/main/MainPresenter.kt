@@ -19,7 +19,7 @@ class MainPresenter(var view: MainContract.View) : MainContract.Presenter {
   }
 
   override fun refreshScores() {
-    view.showScores(scoreDao!!.getAll())
+    view.showScores(scoreDao!!.subscribeAll())
   }
 
   override fun completeScore(score: Score) {

@@ -17,7 +17,10 @@ import io.github.dmi3coder.scorsero.data.Score
 interface ScoreDao {
 
   @Query("SELECT * FROM score")
-  fun getAll(): LiveData<List<Score>>
+  fun subscribeAll(): LiveData<List<Score>>
+
+  @Query("SELECT * FROM score")
+  fun getAll(): List<Score>
 
   //TODO fix kotlin conflict with args
   @Query("SELECT * FROM score WHERE creation_date BETWEEN :arg0 AND :arg1")

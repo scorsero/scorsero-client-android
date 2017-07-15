@@ -22,7 +22,6 @@ interface ScoreDao {
   @Query("SELECT * FROM score")
   fun getAll(): List<Score>
 
-  //TODO fix kotlin conflict with args
   @Query("SELECT * FROM score WHERE creation_date BETWEEN :arg0 AND :arg1")
   fun getAllForDate(fromDate: Long, toDate: Long): Array<Score>
 

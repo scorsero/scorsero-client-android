@@ -3,6 +3,7 @@ package io.github.dmi3coder.scorsero.score
 import io.github.dmi3coder.scorsero.data.Score
 import io.github.dmi3coder.scorsero.data.source.ScoreRepository
 import io.github.dmi3coder.scorsero.score.ScoreCreationContract.ViewState
+import java.util.Date
 
 /**
  * Created by dim3coder on 11:59 PM 7/4/17.
@@ -25,7 +26,8 @@ class ScoreCreationPresenter(
   }
 
   override fun processScore(scoreData: Score?, state: ViewState) {
-    repository.insert(scoreData!!)
+    scoreData!!.creationDate = Date().time
+    repository.insert(scoreData)
     view.clear()
   }
 }

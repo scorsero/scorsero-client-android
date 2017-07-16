@@ -16,8 +16,8 @@ import android.support.test.runner.AndroidJUnit4
 import android.view.View
 import android.view.ViewGroup
 import io.github.dmi3coder.scorsero.MainActivity
-import io.github.dmi3coder.scorsero.MainApplication
 import io.github.dmi3coder.scorsero.R
+import io.github.dmi3coder.scorsero.data.source.ScoreRepository
 import junit.framework.Assert
 import junit.framework.TestCase.assertNotNull
 import org.hamcrest.CoreMatchers.`is`
@@ -141,7 +141,7 @@ class MainControllerTest {
     createScore(testString)
     onView(withText(testString))
         .perform(click())
-    val value = MainApplication.scoreDatabase!!.scoreDao().getAll()
+    val value = ScoreRepository.scoreDatabase.scoreDao().getAll()
     Assert.assertNotNull(value)
     val testScore =
         value.find { it.title == testString }

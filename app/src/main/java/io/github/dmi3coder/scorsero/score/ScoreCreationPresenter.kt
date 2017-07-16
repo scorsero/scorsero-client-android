@@ -1,8 +1,7 @@
 package io.github.dmi3coder.scorsero.score
 
-import io.github.dmi3coder.scorsero.MainApplication
 import io.github.dmi3coder.scorsero.data.Score
-import io.github.dmi3coder.scorsero.data.source.local.ScoreDao
+import io.github.dmi3coder.scorsero.data.source.ScoreRepository
 import io.github.dmi3coder.scorsero.score.ScoreCreationContract.ViewState
 
 /**
@@ -10,7 +9,7 @@ import io.github.dmi3coder.scorsero.score.ScoreCreationContract.ViewState
  */
 class ScoreCreationPresenter(
     var view: ScoreCreationContract.View,
-    var scoreDao: ScoreDao = MainApplication.scoreDatabase!!.scoreDao())
+    var repository: ScoreRepository = ScoreRepository.getInstance())
   : ScoreCreationContract.Presenter {
 
   var operationScore: Score? = null
@@ -26,7 +25,7 @@ class ScoreCreationPresenter(
   }
 
   override fun processScore(scoreData: Score?, state: ViewState) {
-    scoreDao.insert(scoreData!!)
+    repository.insert(scoreData!!)
     view.clear()
   }
 }

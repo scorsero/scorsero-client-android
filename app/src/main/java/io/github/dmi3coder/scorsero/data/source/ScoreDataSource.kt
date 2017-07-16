@@ -20,4 +20,10 @@ interface ScoreDataSource {
 
   fun subscribeScoresFor(date: DateTime): Flowable<List<Score>>
 
+  fun insert(score: Score): Int
+
+  fun update(vararg scores: Score): Int
+
+  fun delete(vararg scores: Score): Boolean
+
 }

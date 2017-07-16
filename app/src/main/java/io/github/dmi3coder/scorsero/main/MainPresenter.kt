@@ -1,8 +1,7 @@
 package io.github.dmi3coder.scorsero.main
 
-import io.github.dmi3coder.scorsero.MainApplication
 import io.github.dmi3coder.scorsero.data.Score
-import io.github.dmi3coder.scorsero.data.source.local.ScoreDao
+import io.github.dmi3coder.scorsero.data.source.ScoreRepository
 
 
 /**
@@ -10,16 +9,16 @@ import io.github.dmi3coder.scorsero.data.source.local.ScoreDao
  */
 class MainPresenter(var view: MainContract.View) : MainContract.Presenter {
 
-  var scoreDao: ScoreDao? = null
+  lateinit var repository: ScoreRepository
 
   override fun start() {
     view.setPresenter(this)
-    scoreDao = MainApplication.scoreDatabase!!.scoreDao()
+    repository = ScoreRepository.getInstance()
     refreshScores()
   }
 
   override fun refreshScores() {
-    view.showScores(scoreDao!!.subscribeAll())
+    view.showScores(repository.subscribeAllScores())
   }
 
   override fun completeScore(score: Score) {
@@ -28,13 +27,13 @@ class MainPresenter(var view: MainContract.View) : MainContract.Presenter {
       score.completionDate = System.currentTimeMillis()
     }
     Thread {
-      scoreDao?.update(score)
+      repository.update(score)
     }.start()
   }
 
   override fun removeScore(score: Score) {
     Thread {
-      scoreDao?.delete(score)
+      repository.delete(score)
     }.start()
   }
 

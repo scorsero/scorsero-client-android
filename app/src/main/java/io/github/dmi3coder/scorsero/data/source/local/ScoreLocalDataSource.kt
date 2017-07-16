@@ -11,6 +11,7 @@ import org.joda.time.DateTime
 
 class ScoreLocalDataSource(val dao: ScoreDao) : ScoreDataSource {
 
+
   override fun getAllScores(): List<Score> = dao.getAll()
 
   override fun getScoresFor(date: DateTime): List<Score>? {
@@ -25,5 +26,20 @@ class ScoreLocalDataSource(val dao: ScoreDao) : ScoreDataSource {
     val fromTime = date.dayOfYear().roundCeilingCopy().toDate().time
     val toTime = date.dayOfYear().roundFloorCopy().toDate().time
     return dao.subscribeAllForDate(fromTime, toTime)
+  }
+
+  override fun insert(score: Score): Int {
+    dao.insert(score)
+    return 0 //TODO handle outcome data
+  }
+
+  override fun update(vararg scores: Score): Int {
+    dao.update(*scores)
+    return 0 //TODO handle outcome data
+  }
+
+  override fun delete(vararg scores: Score): Boolean {
+    dao.delete(*scores)
+    return true //TODO handle outcome data
   }
 }

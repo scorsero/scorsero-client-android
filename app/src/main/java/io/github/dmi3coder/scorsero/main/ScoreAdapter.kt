@@ -13,8 +13,8 @@ import kotlinx.android.synthetic.main.item_score.view.title
 /**
  * Created by dim3coder on 12:43 PM 7/3/17.
  */
-class ScoreAdapter(val presenter: Presenter,
-    val items: List<Score>) : RecyclerView.Adapter<ScoreViewHolder>() {
+class ScoreAdapter(val presenter: Presenter) : RecyclerView.Adapter<ScoreViewHolder>() {
+  private lateinit var items: List<Score>
 
   override fun onCreateViewHolder(parent: ViewGroup?, viewType: Int): ScoreViewHolder {
     val itemView = LayoutInflater.from(parent?.context).inflate(R.layout.item_score, parent, false)
@@ -43,6 +43,10 @@ class ScoreAdapter(val presenter: Presenter,
 
   override fun getItemCount(): Int = items.size
 
+  fun setItems(scores: List<Score>) {
+    this.items = scores
+    notifyDataSetChanged()
+  }
 }
 
 class ScoreViewHolder(itemView: ViewGroup) : RecyclerView.ViewHolder(itemView)

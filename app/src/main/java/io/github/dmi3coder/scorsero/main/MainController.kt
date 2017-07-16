@@ -19,12 +19,13 @@ import kotlinx.android.synthetic.main.controller_main.view.main_list
 class MainController : Controller(), MainContract.View {
 
   var disposal: Disposable? = null
-  internal var view: View? = null
-  internal var presenter: Presenter? = null
+  internal lateinit var view: View
+  internal lateinit var presenter: Presenter
+  private var scoreAdapter: ScoreAdapter? = null
 
   override fun onCreateView(inflater: LayoutInflater, container: ViewGroup): View {
     view = inflater.inflate(R.layout.controller_main, container, false)
-    return view!!
+    return view
   }
 
   override fun setPresenter(presenter: Presenter) {
@@ -33,8 +34,12 @@ class MainController : Controller(), MainContract.View {
 
   override fun showScores(scores: Flowable<List<Score>>) {
     disposal = scores.observeOn(AndroidSchedulers.mainThread()).subscribe({
-      view!!.main_list.layoutManager = LinearLayoutManager(activity)
-      view!!.main_list.adapter = ScoreAdapter(presenter!!, it!!)
+      if (scoreAdapter == null) {
+        view.main_list.layoutManager = LinearLayoutManager(activity)
+        scoreAdapter = ScoreAdapter(presenter)
+        view.main_list.adapter = scoreAdapter
+      }
+      scoreAdapter!!.setItems(it!!)
     })
   }
 

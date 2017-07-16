@@ -1,6 +1,5 @@
 package io.github.dmi3coder.scorsero.data.source.local
 
-import android.arch.lifecycle.LiveData
 import android.arch.persistence.room.Dao
 import android.arch.persistence.room.Delete
 import android.arch.persistence.room.Insert
@@ -8,6 +7,7 @@ import android.arch.persistence.room.OnConflictStrategy
 import android.arch.persistence.room.Query
 import android.arch.persistence.room.Update
 import io.github.dmi3coder.scorsero.data.Score
+import io.reactivex.Flowable
 
 
 /**
@@ -17,13 +17,16 @@ import io.github.dmi3coder.scorsero.data.Score
 interface ScoreDao {
 
   @Query("SELECT * FROM score")
-  fun subscribeAll(): LiveData<List<Score>>
+  fun subscribeAll(): Flowable<List<Score>>
 
   @Query("SELECT * FROM score")
   fun getAll(): List<Score>
 
   @Query("SELECT * FROM score WHERE creation_date BETWEEN :arg0 AND :arg1")
-  fun getAllForDate(fromDate: Long, toDate: Long): Array<Score>
+  fun getAllForDate(fromDate: Long, toDate: Long): List<Score>
+
+  @Query("SELECT * FROM score WHERE creation_date BETWEEN :arg0 AND :arg1")
+  fun subscribeAllForDate(fromDate: Long, toDate: Long): Flowable<List<Score>>
 
   @Insert(onConflict = OnConflictStrategy.FAIL)
   fun insert(score: Score)

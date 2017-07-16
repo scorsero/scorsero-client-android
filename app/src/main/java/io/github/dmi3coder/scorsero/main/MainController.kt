@@ -1,6 +1,5 @@
 package io.github.dmi3coder.scorsero.main
 
-import android.arch.lifecycle.LiveData
 import android.support.v7.widget.LinearLayoutManager
 import android.view.LayoutInflater
 import android.view.View
@@ -9,6 +8,9 @@ import com.bluelinelabs.conductor.Controller
 import io.github.dmi3coder.scorsero.R
 import io.github.dmi3coder.scorsero.data.Score
 import io.github.dmi3coder.scorsero.main.MainContract.Presenter
+import io.reactivex.Flowable
+import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.disposables.Disposable
 import kotlinx.android.synthetic.main.controller_main.view.main_list
 
 /**
@@ -16,6 +18,7 @@ import kotlinx.android.synthetic.main.controller_main.view.main_list
  */
 class MainController : Controller(), MainContract.View {
 
+  var disposal: Disposable? = null
   internal var view: View? = null
   internal var presenter: Presenter? = null
 
@@ -28,12 +31,15 @@ class MainController : Controller(), MainContract.View {
     this.presenter = presenter
   }
 
-  override fun showScores(scores: LiveData<List<Score>>) {
-    scores.observeForever {
+  override fun showScores(scores: Flowable<List<Score>>) {
+    disposal = scores.observeOn(AndroidSchedulers.mainThread()).subscribe({
       view!!.main_list.layoutManager = LinearLayoutManager(activity)
       view!!.main_list.adapter = ScoreAdapter(presenter!!, it!!)
-    }
+    })
   }
 
-
+  override fun onDestroyView(view: View) {
+    super.onDestroyView(view)
+    disposal?.dispose()
+  }
 }

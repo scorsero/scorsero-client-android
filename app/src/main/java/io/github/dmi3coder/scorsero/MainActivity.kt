@@ -3,6 +3,7 @@ package io.github.dmi3coder.scorsero
 import android.os.Bundle
 import android.support.design.widget.BottomSheetBehavior
 import android.support.v7.app.AppCompatActivity
+import android.view.Menu
 import android.view.View
 import com.bluelinelabs.conductor.Conductor
 import com.bluelinelabs.conductor.Router
@@ -14,6 +15,7 @@ import io.github.dmi3coder.scorsero.score.ScoreCreationPresenter
 import kotlinx.android.synthetic.main.activity_main.bottom_sheet_frame
 import kotlinx.android.synthetic.main.activity_main.main_frame
 import kotlinx.android.synthetic.main.activity_main.main_starter_fab
+import org.joda.time.DateTime
 
 class MainActivity : AppCompatActivity() {
 
@@ -41,7 +43,18 @@ class MainActivity : AppCompatActivity() {
       router!!.setRoot(RouterTransaction.with(mainController))
       mainPresenter.start()
     }
+    setToolbarDate(DateTime.now())
   }
+
+  private fun setToolbarDate(date: DateTime) {
+    title = date.toString("dd MMM YYYY")
+  }
+
+  override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+    menuInflater.inflate(R.menu.score_list, menu)
+    return true
+  }
+
 
   override fun onBackPressed() {
     if (!router!!.handleBack()) {

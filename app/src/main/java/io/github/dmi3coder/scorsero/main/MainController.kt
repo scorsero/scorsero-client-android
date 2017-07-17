@@ -35,7 +35,10 @@ class MainController : Controller(), MainContract.View {
   override fun showScores(scores: Flowable<List<Score>>) {
     disposal = scores.observeOn(AndroidSchedulers.mainThread()).subscribe({
       if (scoreAdapter == null) {
-        view.main_list.layoutManager = LinearLayoutManager(activity)
+        val linearLayoutManager = LinearLayoutManager(activity)
+        linearLayoutManager.reverseLayout = true
+        linearLayoutManager.stackFromEnd = true
+        view.main_list.layoutManager = linearLayoutManager
         scoreAdapter = ScoreAdapter(presenter)
         view.main_list.adapter = scoreAdapter
       }

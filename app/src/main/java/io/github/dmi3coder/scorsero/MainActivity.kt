@@ -15,6 +15,7 @@ import io.github.dmi3coder.scorsero.score.ScoreCreationPresenter
 import kotlinx.android.synthetic.main.activity_main.bottom_sheet_frame
 import kotlinx.android.synthetic.main.activity_main.main_frame
 import kotlinx.android.synthetic.main.activity_main.main_starter_fab
+import kotlinx.android.synthetic.main.activity_main.toolbar
 import org.joda.time.DateTime
 
 class MainActivity : AppCompatActivity() {
@@ -26,8 +27,23 @@ class MainActivity : AppCompatActivity() {
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
     setContentView(R.layout.activity_main)
-    router = Conductor.attachRouter(this, main_frame, savedInstanceState)
+    setupToolbar()
+    showScreen(savedInstanceState)
+    showBottomSheet(savedInstanceState)
+  }
 
+
+  fun showScreen(savedInstanceState: Bundle?) {
+    router = Conductor.attachRouter(this, main_frame, savedInstanceState)
+    if (!router!!.hasRootController()) {
+      val mainController = MainController()
+      val mainPresenter = MainPresenter(mainController)
+      router!!.setRoot(RouterTransaction.with(mainController))
+      mainPresenter.start()
+    }
+  }
+
+  fun showBottomSheet(savedInstanceState: Bundle?) {
     bottomSheetBehavior = BottomSheetBehavior.from(bottom_sheet_frame)
     bottomSheetBehavior?.isHideable = true
     bottomSheetBehavior?.state = BottomSheetBehavior.STATE_HIDDEN
@@ -37,12 +53,11 @@ class MainActivity : AppCompatActivity() {
     bottomSheetRouter = Conductor.attachRouter(this, bottom_sheet_frame, savedInstanceState)
     bottomSheetRouter!!.setRoot(RouterTransaction.with(scoreStarterController))
     scoreStarterPresenter.start()
-    if (!router!!.hasRootController()) {
-      val mainController = MainController()
-      val mainPresenter = MainPresenter(mainController)
-      router!!.setRoot(RouterTransaction.with(mainController))
-      mainPresenter.start()
-    }
+
+  }
+
+  private fun setupToolbar() {
+    setSupportActionBar(toolbar)
     setToolbarDate(DateTime.now())
   }
 

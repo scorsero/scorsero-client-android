@@ -9,11 +9,27 @@
     tools:context="io.github.dmi3coder.scorsero.MainActivity"
     >
 
-  <FrameLayout
-      android:id="@+id/main_frame"
+  <LinearLayout
       android:layout_width="match_parent"
       android:layout_height="match_parent"
-      />
+      android:orientation="vertical"
+      >
+
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:background="@color/colorPrimary"
+        />
+
+    <FrameLayout
+        android:id="@+id/main_frame"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        />
+
+
+  </LinearLayout>
 
   <FrameLayout
       android:id="@+id/bottom_sheet_frame"

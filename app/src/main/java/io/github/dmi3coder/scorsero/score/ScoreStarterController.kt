@@ -25,7 +25,7 @@ import kotlinx.android.synthetic.main.controller_score_starter.view.title_field
 /**
  * Created by dim3coder on 6:49 PM 7/4/17.
  */
-class ScoreCreationController() : Controller(), ScoreCreationContract.View, OnClickListener {
+class ScoreStarterController() : Controller(), ScoreCreationContract.View, OnClickListener {
 
   internal var presenter: Presenter? = null
   var bottomSheetBehavior: BottomSheetBehavior<View>? = null
@@ -86,7 +86,7 @@ class ScoreCreationController() : Controller(), ScoreCreationContract.View, OnCl
             this.setOnClickListener { _ ->
               for (i in 0.rangeTo(view.childCount - 1)) {
                 view.getChildAt(i).setColors(
-                    activity!!.getColor(ScoreCreationController.priorities[i].second), 0)
+                    activity!!.getColor(ScoreStarterController.priorities[i].second), 0)
               }
               this.setColors(activity!!.getColor(it.second), Color.YELLOW)
               operationScore?.priority = it.first

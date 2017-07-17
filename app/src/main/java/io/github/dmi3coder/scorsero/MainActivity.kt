@@ -10,7 +10,7 @@ import com.bluelinelabs.conductor.Router
 import com.bluelinelabs.conductor.RouterTransaction
 import io.github.dmi3coder.scorsero.main.MainController
 import io.github.dmi3coder.scorsero.main.MainPresenter
-import io.github.dmi3coder.scorsero.score.ScoreCreationController
+import io.github.dmi3coder.scorsero.score.ScoreStarterController
 import io.github.dmi3coder.scorsero.score.ScoreCreationPresenter
 import kotlinx.android.synthetic.main.activity_main.bottom_sheet_frame
 import kotlinx.android.synthetic.main.activity_main.main_frame
@@ -47,7 +47,7 @@ class MainActivity : AppCompatActivity() {
     bottomSheetBehavior = BottomSheetBehavior.from(bottom_sheet_frame)
     bottomSheetBehavior?.isHideable = true
     bottomSheetBehavior?.state = BottomSheetBehavior.STATE_HIDDEN
-    val scoreStarterController = ScoreCreationController(bottomSheetBehavior!!)
+    val scoreStarterController = ScoreStarterController(bottomSheetBehavior!!)
     val scoreStarterPresenter = ScoreCreationPresenter(scoreStarterController)
     main_starter_fab.setOnClickListener(scoreStarterController)
     bottomSheetRouter = Conductor.attachRouter(this, bottom_sheet_frame, savedInstanceState)

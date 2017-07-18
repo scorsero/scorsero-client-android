@@ -1,5 +1,6 @@
 package io.github.dmi3coder.scorsero.main
 
+import android.graphics.Color
 import android.graphics.Paint
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
@@ -25,7 +26,7 @@ class ScoreAdapter(val presenter: Presenter) : RecyclerView.Adapter<ScoreViewHol
     holder!!.itemView.title.text = items[position].title ?: "Empty item"
     val itemView = holder.itemView
     if (items[position].completed ?: false) {
-      itemView.title.paintFlags += Paint.STRIKE_THRU_TEXT_FLAG
+      itemView.title.paintFlags = Paint.STRIKE_THRU_TEXT_FLAG
     } else {
       itemView.title.paintFlags = 0
     }

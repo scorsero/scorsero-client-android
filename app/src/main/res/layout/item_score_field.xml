@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    android:padding="16dp"
+    >
+
+  <ImageView
+      android:id="@+id/icon"
+      android:layout_width="48dp"
+      android:layout_height="48dp"
+      android:background="@drawable/shape_priority_circle"
+      android:backgroundTint="@color/colorPrimaryDark"
+      android:padding="6dp"
+      android:src="@drawable/ic_search"
+      android:tint="@android:color/white"
+      app:layout_constraintStart_toStartOf="parent"
+      app:layout_constraintTop_toTopOf="parent"
+      />
+
+  <TextView
+      android:id="@+id/field_title"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_marginStart="16dp"
+      android:alpha="0.87"
+      android:textColor="@android:color/white"
+      android:textSize="18sp"
+      app:layout_constraintStart_toEndOf="@+id/icon"
+      app:layout_constraintTop_toTopOf="parent"
+      tools:text="Test"
+      />
+
+  <TextView
+      android:id="@+id/field_value"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:alpha="0.54"
+      android:textColor="@android:color/white"
+      app:layout_constraintStart_toStartOf="@+id/field_title"
+      app:layout_constraintTop_toBottomOf="@+id/field_title"
+      tools:text="Test title"
+      />
+
+
+</android.support.constraint.ConstraintLayout>

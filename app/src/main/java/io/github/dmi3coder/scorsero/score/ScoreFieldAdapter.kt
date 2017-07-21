@@ -44,6 +44,8 @@ class ScoreFieldAdapter(val score: Score) : RecyclerView.Adapter<ScoreFieldHolde
     val builder = AlertDialog.Builder(context)
     var dialogView: View? = null
 
+    holder.itemView.field_icon.backgroundTintList = ColorStateList.valueOf(
+        context.getColor(R.color.colorPrimaryDark))
     //TODO: extract class on modularity
     when (position) {
       0 -> {
@@ -64,6 +66,10 @@ class ScoreFieldAdapter(val score: Score) : RecyclerView.Adapter<ScoreFieldHolde
             ScoreStarterController.priorities.map { it.first.toString() }.toTypedArray()) { _, priorityPosition ->
           score.priority = priorityPosition
           this.notifyItemChanged(position)
+        }
+        if (score.priority != null) {
+          holder.itemView.field_icon.backgroundTintList = ColorStateList.valueOf(
+              context.getColor(ScoreStarterController.priorities[score.priority!!].second))
         }
       }
       2 -> {
@@ -103,10 +109,6 @@ class ScoreFieldAdapter(val score: Score) : RecyclerView.Adapter<ScoreFieldHolde
       this.field_title.text = title
       this.field_value.text = value
       this.field_icon.setImageResource(drawable!!)
-      if (score.priority != null) {
-        this.field_icon.backgroundTintList = ColorStateList.valueOf(
-            context.getColor(ScoreStarterController.priorities[score.priority!!].second))
-      }
       setOnClickListener { dialog.show() }
     }
   }

@@ -30,8 +30,8 @@ class ScoreLocalDataSource(val dao: ScoreDao) : ScoreDataSource {
     return dao.subscribeAllForDate(fromTime, toTime)
   }
 
-  override fun insert(score: Score): Int {
-    dao.insert(score)
+  override fun insert(vararg score: Score): Int {
+    dao.insert(*score)
     return 0 //TODO handle outcome data
   }
 

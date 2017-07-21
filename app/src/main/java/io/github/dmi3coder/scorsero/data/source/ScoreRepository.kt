@@ -8,6 +8,7 @@ import io.github.dmi3coder.scorsero.data.source.local.ScoreLocalDataSource
 import io.reactivex.Flowable
 import io.reactivex.Single
 import org.joda.time.DateTime
+import kotlin.reflect.KFunction1
 
 /**
  * Created by dim3coder on 9:55 AM 7/16/17.
@@ -34,17 +35,24 @@ class ScoreRepository(val local: ScoreDataSource) {
   }
 
   fun insert(score: Score) {
-    local.insert(score)
+    inBackground(local::insert, score)
   }
 
   fun update(score: Score) {
-    local.update(score)
+    inBackground(local::update, score)
   }
 
   fun delete(score: Score) {
-    local.delete(score)
+    inBackground(local::delete, score)
   }
 
+  fun inBackground(
+      func: KFunction1<@ParameterName(name = "scores") Array<out Score>, Any>,
+      vararg score: Score) {
+    Thread {
+      func(score)
+    }.start()
+  }
 
   companion object {
     private lateinit var INSTANCE: ScoreRepository

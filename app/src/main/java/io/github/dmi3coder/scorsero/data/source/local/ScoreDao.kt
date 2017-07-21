@@ -29,7 +29,7 @@ interface ScoreDao {
   fun subscribeAllForDate(fromDate: Long, toDate: Long): Flowable<List<Score>>
 
   @Insert(onConflict = OnConflictStrategy.FAIL)
-  fun insert(score: Score)
+  fun insert(vararg score: Score)
 
   @Update
   fun update(vararg scores: Score)

@@ -8,8 +8,8 @@ import android.view.ViewGroup
 import io.github.dmi3coder.scorsero.R
 import io.github.dmi3coder.scorsero.data.Score
 import io.github.dmi3coder.scorsero.main.MainContract.Presenter
-import kotlinx.android.synthetic.main.item_score.view.description
-import kotlinx.android.synthetic.main.item_score.view.title
+import io.github.dmi3coder.scorsero.score.ScoreStarterController
+import kotlinx.android.synthetic.main.item_score.view.*
 
 /**
  * Created by dim3coder on 12:43 PM 7/3/17.
@@ -23,20 +23,23 @@ class ScoreAdapter(val presenter: Presenter) : RecyclerView.Adapter<ScoreViewHol
   }
 
   override fun onBindViewHolder(holder: ScoreViewHolder?, position: Int) {
-    holder!!.itemView.title.text = items[position].title ?: "Empty item"
+    val score = items[position]
+    holder!!.itemView.title.text = score.title ?: "Empty item"
     val itemView = holder.itemView
-    if (items[position].completed ?: false) {
+    itemView.completion_checkbox.isChecked = score.completed?:false
+
+    if (score.completed ?: false) {
       itemView.title.paintFlags = Paint.STRIKE_THRU_TEXT_FLAG
     } else {
       itemView.title.paintFlags = 0
     }
     itemView.apply {
-      description.text = items[position].description ?: "This score needs description"
+      description.text = score.description ?: "This score needs description"
       setOnClickListener {
-        presenter.completeScore(items[position])
+        presenter.completeScore(score)
       }
       setOnLongClickListener {
-        presenter.removeScore(items[position])
+        presenter.removeScore(score)
         true
       }
     }

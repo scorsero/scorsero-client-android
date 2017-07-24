@@ -15,7 +15,7 @@ import kotlinx.android.synthetic.main.item_score.view.*
  * Created by dim3coder on 12:43 PM 7/3/17.
  */
 class ScoreAdapter(val presenter: Presenter) : RecyclerView.Adapter<ScoreViewHolder>() {
-  private lateinit var items: List<Score>
+  private var items: List<Score>? = null
 
   override fun onCreateViewHolder(parent: ViewGroup?, viewType: Int): ScoreViewHolder {
     val itemView = LayoutInflater.from(parent?.context).inflate(R.layout.item_score, parent, false)
@@ -23,7 +23,7 @@ class ScoreAdapter(val presenter: Presenter) : RecyclerView.Adapter<ScoreViewHol
   }
 
   override fun onBindViewHolder(holder: ScoreViewHolder?, position: Int) {
-    val score = items[position]
+    val score = items!![position]
     holder!!.itemView.title.text = score.title ?: "Empty item"
     val itemView = holder.itemView
     itemView.completion_checkbox.isChecked = score.completed?:false
@@ -45,7 +45,7 @@ class ScoreAdapter(val presenter: Presenter) : RecyclerView.Adapter<ScoreViewHol
     }
   }
 
-  override fun getItemCount(): Int = items.size
+  override fun getItemCount(): Int = items?.size ?: 0
 
   fun setItems(scores: List<Score>) {
     this.items = scores

@@ -7,7 +7,6 @@ import com.bluelinelabs.conductor.Conductor
 import com.bluelinelabs.conductor.Router
 import com.bluelinelabs.conductor.RouterTransaction
 import io.github.dmi3coder.scorsero.main.MainController
-import io.github.dmi3coder.scorsero.main.MainPresenter
 import kotlinx.android.synthetic.main.activity_main.main_frame
 import kotlinx.android.synthetic.main.activity_main.toolbar
 import org.joda.time.DateTime
@@ -19,17 +18,14 @@ class MainActivity : AppCompatActivity() {
     super.onCreate(savedInstanceState)
     setContentView(R.layout.activity_main)
     setupToolbar()
-    showScreen(savedInstanceState)
+    showRootScreen(savedInstanceState)
   }
 
 
-  fun showScreen(savedInstanceState: Bundle?) {
+  fun showRootScreen(savedInstanceState: Bundle?) {
     router = Conductor.attachRouter(this, main_frame, savedInstanceState)
     if (!router!!.hasRootController()) {
-      val mainController = MainController(savedInstanceState)
-      val mainPresenter = MainPresenter(mainController)
-      router!!.setRoot(RouterTransaction.with(mainController))
-      mainPresenter.start()
+      router!!.setRoot(RouterTransaction.with(MainController(savedInstanceState)))
     }
   }
 

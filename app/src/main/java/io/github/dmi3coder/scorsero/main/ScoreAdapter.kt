@@ -1,6 +1,5 @@
 package io.github.dmi3coder.scorsero.main
 
-import android.graphics.Color
 import android.graphics.Paint
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
@@ -15,7 +14,7 @@ import kotlinx.android.synthetic.main.item_score.view.title
  * Created by dim3coder on 12:43 PM 7/3/17.
  */
 class ScoreAdapter(val presenter: Presenter) : RecyclerView.Adapter<ScoreViewHolder>() {
-  private lateinit var items: List<Score>
+  private var items: List<Score>? = null
 
   override fun onCreateViewHolder(parent: ViewGroup?, viewType: Int): ScoreViewHolder {
     val itemView = LayoutInflater.from(parent?.context).inflate(R.layout.item_score, parent, false)
@@ -23,26 +22,26 @@ class ScoreAdapter(val presenter: Presenter) : RecyclerView.Adapter<ScoreViewHol
   }
 
   override fun onBindViewHolder(holder: ScoreViewHolder?, position: Int) {
-    holder!!.itemView.title.text = items[position].title ?: "Empty item"
+    holder!!.itemView.title.text = items!![position].title ?: "Empty item"
     val itemView = holder.itemView
-    if (items[position].completed ?: false) {
+    if (items!![position].completed ?: false) {
       itemView.title.paintFlags = Paint.STRIKE_THRU_TEXT_FLAG
     } else {
       itemView.title.paintFlags = 0
     }
     itemView.apply {
-      description.text = items[position].description ?: "This score needs description"
+      description.text = items!![position].description ?: "This score needs description"
       setOnClickListener {
-        presenter.completeScore(items[position])
+        presenter.completeScore(items!![position])
       }
       setOnLongClickListener {
-        presenter.removeScore(items[position])
+        presenter.removeScore(items!![position])
         true
       }
     }
   }
 
-  override fun getItemCount(): Int = items.size
+  override fun getItemCount(): Int = items?.size ?: 0
 
   fun setItems(scores: List<Score>) {
     this.items = scores

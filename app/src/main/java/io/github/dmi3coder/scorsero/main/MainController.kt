@@ -39,11 +39,23 @@ class MainController(val savedInstanceState: Bundle?) : Controller(), MainContra
   override fun onCreateView(inflater: LayoutInflater, container: ViewGroup): View {
     view = inflater.inflate(R.layout.controller_main, container, false)
     setupBottomSheet()
+    val linearLayoutManager = LinearLayoutManager(activity)
+    linearLayoutManager.reverseLayout = true
+    linearLayoutManager.stackFromEnd = true
+    view.main_list.layoutManager = linearLayoutManager
+    presenter = MainPresenter(this)
     return view
   }
 
   override fun setPresenter(presenter: Presenter) {
     this.presenter = presenter
+  }
+
+  override fun onAttach(view: View) {
+    super.onAttach(view)
+    scoreAdapter = ScoreAdapter(presenter)
+    view.main_list.adapter = scoreAdapter
+    presenter.start()
   }
 
   fun setupBottomSheet() {
@@ -61,14 +73,6 @@ class MainController(val savedInstanceState: Bundle?) : Controller(), MainContra
 
   override fun showScores(scores: Flowable<List<Score>>) {
     disposal = scores.observeOn(AndroidSchedulers.mainThread()).subscribe({
-      if (scoreAdapter == null) {
-        val linearLayoutManager = LinearLayoutManager(activity)
-        linearLayoutManager.reverseLayout = true
-        linearLayoutManager.stackFromEnd = true
-        view.main_list.layoutManager = linearLayoutManager
-        scoreAdapter = ScoreAdapter(presenter)
-        view.main_list.adapter = scoreAdapter
-      }
       scoreAdapter!!.setItems(it!!)
     })
   }

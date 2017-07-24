@@ -13,7 +13,6 @@ class MainPresenter(var view: MainContract.View) : MainContract.Presenter {
   lateinit var repository: ScoreRepository
 
   override fun start() {
-    view.setPresenter(this)
     repository = ScoreRepository.getInstance()
     refreshScores()
   }
@@ -36,6 +35,10 @@ class MainPresenter(var view: MainContract.View) : MainContract.Presenter {
     Thread {
       repository.delete(score)
     }.start()
+  }
+
+  init {
+    view.setPresenter(this)
   }
 
 }

@@ -12,6 +12,7 @@ import android.widget.DatePicker
 import android.widget.EditText
 import io.github.dmi3coder.scorsero.R
 import io.github.dmi3coder.scorsero.data.Score
+import io.github.dmi3coder.scorsero.utils.openKeyboard
 import kotlinx.android.synthetic.main.item_score_field.view.field_icon
 import kotlinx.android.synthetic.main.item_score_field.view.field_title
 import kotlinx.android.synthetic.main.item_score_field.view.field_value
@@ -104,7 +105,7 @@ class ScoreFieldAdapter(val score: Score) : RecyclerView.Adapter<ScoreFieldHolde
 
     builder.setNegativeButton(android.R.string.cancel) { dialog, _ -> dialog.cancel() }
     val dialog = builder.create()
-
+    dialog.setOnShowListener { dialogView?.openKeyboard() }
     holder.itemView.apply {
       this.field_title.text = title
       this.field_value.text = value

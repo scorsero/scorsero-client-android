@@ -22,9 +22,6 @@ class ScoreCreationController(
 
   override fun onCreateView(inflater: LayoutInflater, container: ViewGroup): View {
     view = inflater.inflate(R.layout.controller_score_creation, container, false)
-    view.post {
-      view.creation_fab.requestLayout()
-    }
     ScoreCreationPresenter(this).start(operationScore)
     return view
   }

@@ -54,7 +54,8 @@ class ScoreFieldAdapter(val score: Score) : RecyclerView.Adapter<ScoreFieldHolde
         value = score.title
         drawable = R.drawable.ic_chat
         val input = EditText(context)
-        input.inputType = InputType.TYPE_CLASS_TEXT
+        input.inputType = (InputType.TYPE_CLASS_TEXT
+            or InputType.TYPE_TEXT_FLAG_CAP_SENTENCES)
         input.maxLines = 1
         dialogView = input
         okResponseHandler = { _, _ -> score.title = input.text.toString() }
@@ -64,7 +65,9 @@ class ScoreFieldAdapter(val score: Score) : RecyclerView.Adapter<ScoreFieldHolde
         value = "${score.priority}st priority"
         drawable = R.drawable.ic_notifications
         builder.setItems(
-            ScoreStarterController.priorities.map { it.first.toString() }.toTypedArray()) { _, priorityPosition ->
+            ScoreStarterController.priorities
+                .map { it.first.toString() }
+                .toTypedArray()) { _, priorityPosition ->
           score.priority = priorityPosition
           this.notifyItemChanged(position)
         }
@@ -91,7 +94,11 @@ class ScoreFieldAdapter(val score: Score) : RecyclerView.Adapter<ScoreFieldHolde
         value = score.description
         drawable = R.drawable.ic_chat
         val input = EditText(context)
-        input.inputType = InputType.TYPE_CLASS_TEXT
+        input.inputType = (InputType.TYPE_CLASS_TEXT
+            or InputType.TYPE_TEXT_FLAG_CAP_SENTENCES
+            or InputType.TYPE_TEXT_FLAG_IME_MULTI_LINE
+            or InputType.TYPE_TEXT_FLAG_MULTI_LINE
+            )
         dialogView = input
         okResponseHandler = { _, _ -> score.description = input.text.toString() }
       }

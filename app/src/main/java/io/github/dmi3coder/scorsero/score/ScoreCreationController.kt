@@ -35,6 +35,9 @@ class ScoreCreationController(
   }
 
   override fun setScore(scoreData: Score?) {
+    scoreData?.id?.run {
+      view.creation_fab.setImageResource(R.drawable.ic_check)
+    }
     operationScore = scoreData ?: Score()
     view.field_list.layoutManager = LinearLayoutManager(activity)
     view.field_list.adapter = ScoreFieldAdapter(operationScore)

@@ -13,6 +13,7 @@ import com.bluelinelabs.conductor.RouterTransaction
 import io.github.dmi3coder.scorsero.R
 import io.github.dmi3coder.scorsero.data.Score
 import io.github.dmi3coder.scorsero.main.MainContract.Presenter
+import io.github.dmi3coder.scorsero.score.ScoreCreationController
 import io.github.dmi3coder.scorsero.score.ScoreCreationPresenter
 import io.github.dmi3coder.scorsero.score.ScoreStarterController
 import io.reactivex.Flowable
@@ -65,15 +66,23 @@ class MainController(val savedInstanceState: Bundle?) : Controller(), MainContra
     val scoreStarterController = ScoreStarterController(bottomSheetBehavior!!)
     val scoreStarterPresenter = ScoreCreationPresenter(scoreStarterController)
     view.main_starter_fab.setOnClickListener(scoreStarterController)
+    view.main_starter_fab.setOnLongClickListener {
+      router.pushController(RouterTransaction.with(ScoreCreationController()))
+      true
+    }
     bottomSheetRouter = Conductor.attachRouter(activity!!, view.bottom_sheet_frame,
         savedInstanceState)
     bottomSheetRouter!!.setRoot(RouterTransaction.with(scoreStarterController))
     scoreStarterPresenter.start()
   }
 
+  override fun editScore(score: Score) {
+    router.pushController(RouterTransaction.with(ScoreCreationController(score)))
+  }
+
   override fun showScores(scores: Flowable<List<Score>>) {
     disposal = scores.observeOn(AndroidSchedulers.mainThread()).subscribe({
-      scoreAdapter!!.setItems(it!!)
+      scoreAdapter!!.setItems(it)
     })
   }
 

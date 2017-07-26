@@ -31,6 +31,10 @@ class MainPresenter(var view: MainContract.View) : MainContract.Presenter {
     }.start()
   }
 
+  override fun editScore(score: Score) {
+    view.editScore(score)
+  }
+
   override fun removeScore(score: Score) {
     Thread {
       repository.delete(score)

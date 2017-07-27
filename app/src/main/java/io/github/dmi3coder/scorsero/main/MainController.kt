@@ -86,6 +86,10 @@ class MainController(val savedInstanceState: Bundle?) : Controller(), MainContra
     })
   }
 
+  override fun setDate(date: String) {
+    activity?.title = date
+  }
+
   override fun onDestroyView(view: View) {
     super.onDestroyView(view)
     disposal?.dispose()

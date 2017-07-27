@@ -15,6 +15,7 @@ class MainPresenter(var view: MainContract.View) : MainContract.Presenter {
   override fun start() {
     repository = ScoreRepository.getInstance()
     refreshScores()
+    view.setDate(DateTime.now().toString("dd MMM YYYY"))
   }
 
   override fun refreshScores() {

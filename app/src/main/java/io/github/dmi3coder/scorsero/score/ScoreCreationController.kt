@@ -35,8 +35,11 @@ class ScoreCreationController(
   }
 
   override fun setScore(scoreData: Score?) {
-    scoreData?.id?.run {
+    if(scoreData?.id != null){
       view.creation_fab.setImageResource(R.drawable.ic_check)
+      activity?.title = "Edit Score"
+    } else {
+      activity?.title = "New Score"
     }
     operationScore = scoreData ?: Score()
     view.field_list.layoutManager = LinearLayoutManager(activity)

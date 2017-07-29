@@ -140,8 +140,7 @@ class MainControllerTest {
   //TODO implement checking over the current screen
 
   fun createScore(testString: String) {
-    val floatingActionButton = onView(allOf(withId(R.id.main_starter_fab),
-        childAtPosition(childAtPosition(withId(android.R.id.content), 0), 2), isDisplayed()))
+    val floatingActionButton = onView(allOf(withId(R.id.main_starter_fab), isDisplayed()))
     floatingActionButton.perform(click())
 
     val appCompatEditText = onView(withId(R.id.title_field))
@@ -151,8 +150,7 @@ class MainControllerTest {
         childAtPosition(withClassName(`is`("android.widget.LinearLayout")), 3)), 0), isDisplayed()))
     view.perform(click())
 
-    val floatingActionButton2 = onView(allOf(withId(R.id.main_starter_fab),
-        childAtPosition(childAtPosition(withId(android.R.id.content), 0), 2), isDisplayed()))
+    val floatingActionButton2 = onView(allOf(withId(R.id.main_starter_fab), isDisplayed()))
     floatingActionButton2.perform(click())
   }
 

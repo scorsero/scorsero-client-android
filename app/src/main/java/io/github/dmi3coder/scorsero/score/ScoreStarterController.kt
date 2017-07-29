@@ -40,7 +40,7 @@ class ScoreStarterController() : Controller(), ScoreCreationContract.View, OnCli
 
       override fun onStateChanged(bottomSheet: View, newState: Int) {
         if (newState == BottomSheetBehavior.STATE_HIDDEN) {
-          view!!.title_field.clearFocus()
+          bottomSheet.title_field.clearFocus()
           val imm = activity?.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
           imm.hideSoftInputFromWindow(bottomSheet.windowToken, 0)
         }

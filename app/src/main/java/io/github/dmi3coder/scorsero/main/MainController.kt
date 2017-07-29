@@ -48,6 +48,11 @@ class MainController(val savedInstanceState: Bundle?) : Controller(), MainContra
     return view
   }
 
+  override fun onRestoreViewState(view: View, savedViewState: Bundle) {
+    super.onRestoreViewState(view, savedViewState)
+    bottomSheetBehavior?.state = savedViewState.getInt(BOTTOM_SHEET_STATE, BottomSheetBehavior.STATE_HIDDEN)
+  }
+
   override fun setPresenter(presenter: Presenter) {
     this.presenter = presenter
   }
@@ -90,8 +95,18 @@ class MainController(val savedInstanceState: Bundle?) : Controller(), MainContra
     activity?.title = date
   }
 
+
+  override fun onSaveViewState(view: View, outState: Bundle) {
+    super.onSaveViewState(view, outState)
+    outState.putInt(BOTTOM_SHEET_STATE,bottomSheetBehavior?.state ?: BottomSheetBehavior.STATE_HIDDEN)
+  }
+
   override fun onDestroyView(view: View) {
     super.onDestroyView(view)
     disposal?.dispose()
+  }
+
+  companion object {
+    const val BOTTOM_SHEET_STATE = "io.github.dmi3coder.scorsero.main.BOTTOM_SHEET_STATE"
   }
 }

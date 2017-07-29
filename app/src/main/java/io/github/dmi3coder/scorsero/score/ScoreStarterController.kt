@@ -45,7 +45,6 @@ class ScoreStarterController() : Controller(), ScoreCreationContract.View, OnCli
           imm.hideSoftInputFromWindow(bottomSheet.windowToken, 0)
         }
       }
-
     })
   }
 

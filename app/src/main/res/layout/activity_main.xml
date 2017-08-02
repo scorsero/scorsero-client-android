@@ -41,10 +41,9 @@
 
   <FrameLayout
       android:id="@+id/drawer_frame"
-      android:layout_width="240dp"
+      android:layout_width="306dp"
       android:layout_height="match_parent"
       android:layout_gravity="start"
-      android:background="@color/colorPrimaryDark"
       />
 
 </android.support.v4.widget.DrawerLayout>

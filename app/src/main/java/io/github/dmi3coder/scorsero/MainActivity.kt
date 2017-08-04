@@ -23,6 +23,7 @@ class MainActivity : AppCompatActivity() {
     setContentView(R.layout.activity_main)
     setupToolbar()
     showRootScreen(savedInstanceState)
+    showDrawerRootScreen(savedInstanceState)
   }
 
   private fun showDrawerRootScreen(savedInstanceState: Bundle?) {

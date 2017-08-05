@@ -26,8 +26,8 @@ class ScoreCreationPresenter(
   }
 
   override fun processScore(scoreData: Score?, state: ViewState) {
-    scoreData!!.creationDate = Date().time
-    if(scoreData.id == null) {
+    if (scoreData!!.creationDate == null) scoreData.creationDate = Date().time
+    if (scoreData.id == null) {
       repository.insert(scoreData)
     } else {
       repository.update(scoreData)

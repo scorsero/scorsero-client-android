@@ -17,11 +17,30 @@ class NavigationPresenter(var view: View,
     var navigationItems: ArrayList<NavigationItem> = ArrayList()
     navigationItems.add(
         NavigationItem(
+            R.string.drawer_options_todo,
+            Interval(null),
+            //TODO: add whole subscription
+            repository.subscribeElementCountFor(DateTime(0), DateTime.now())
+        ))
+    navigationItems.add(
+        NavigationItem(
             R.string.drawer_options_today,
-            Interval(System.currentTimeMillis(), System.currentTimeMillis()),
+            Interval(null),
             repository.subscribeElementCountFor(DateTime.now(), DateTime.now())
-        )
-    )
+        ))
+    navigationItems.add(
+        NavigationItem(
+            R.string.drawer_options_tomorrow,
+            Interval(null),
+            repository.subscribeElementCountFor(DateTime.now().plusDays(1),
+                DateTime.now().plusDays(1))
+        ))
+    navigationItems.add(
+        NavigationItem(
+            R.string.drawer_options_next_7_days,
+            Interval(null),
+            repository.subscribeElementCountFor(DateTime.now(), DateTime.now().plusWeeks(1))
+        ))
     view.showNavigationItems(navigationItems.toTypedArray())
 
   }

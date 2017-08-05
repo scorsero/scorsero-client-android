@@ -29,8 +29,8 @@ class ScoreLocalDataSource(val dao: ScoreDao) : ScoreDataSource {
   }
 
   override fun subscribeScoreCountFor(fromDate: DateTime, toDate: DateTime): Flowable<Int> {
-    val fromTime = toDate.dayOfYear().roundFloorCopy().toDate().time
-    val toTime = fromDate.dayOfYear().roundCeilingCopy().toDate().time
+    val fromTime = fromDate.dayOfYear().roundFloorCopy().toDate().time
+    val toTime = toDate.dayOfYear().roundCeilingCopy().toDate().time
     return dao.subscribeElementCount(fromTime, toTime)
   }
 

@@ -14,11 +14,13 @@ import kotlinx.android.synthetic.main.controller_drawer.view.drawer_list
  */
 class DrawerController : Controller(), NavigationContract.View {
   lateinit internal var presenter: Presenter
+  internal var view: View? = null
 
   override fun onCreateView(inflater: LayoutInflater, container: ViewGroup): View {
-    val view = inflater.inflate(R.layout.controller_drawer, container, false)
-
-    return view
+    view = inflater.inflate(R.layout.controller_drawer, container, false)
+    val presenter = NavigationPresenter(this)
+    presenter.start()
+    return view!!
   }
 
   override fun setPresenter(presenter: Presenter) {

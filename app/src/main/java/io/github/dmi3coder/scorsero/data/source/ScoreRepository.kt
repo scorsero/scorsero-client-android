@@ -34,6 +34,10 @@ class ScoreRepository(val local: ScoreDataSource) {
     return Flowable.fromPublisher(local.subscribeScoresFor(date))
   }
 
+  fun subscribeElementCountFor(fromDate: DateTime, toDate: DateTime): Flowable<Int> {
+    return Flowable.fromPublisher(local.subscribeScoreCountFor(fromDate, toDate))
+  }
+
   fun insert(score: Score) {
     inBackground(local::insert, score)
   }

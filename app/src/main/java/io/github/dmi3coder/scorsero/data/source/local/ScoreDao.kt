@@ -22,11 +22,14 @@ interface ScoreDao {
   @Query("SELECT * FROM score")
   fun getAll(): List<Score>
 
-  @Query("SELECT * FROM score WHERE creation_date BETWEEN :arg0 AND :arg1")
+  @Query("SELECT * FROM score $CREATION_DATE_SELECTION")
   fun getAllForDate(fromDate: Long, toDate: Long): List<Score>
 
-  @Query("SELECT * FROM score WHERE creation_date BETWEEN :arg0 AND :arg1")
+  @Query("SELECT * FROM score $CREATION_DATE_SELECTION")
   fun subscribeAllForDate(fromDate: Long, toDate: Long): Flowable<List<Score>>
+
+  @Query("SELECT count(*) FROM score $CREATION_DATE_SELECTION")
+  fun subscribeElementCount(fromDate: Long, toDate: Long): Flowable<Int>
 
   @Insert(onConflict = OnConflictStrategy.FAIL)
   fun insert(vararg score: Score)
@@ -36,5 +39,9 @@ interface ScoreDao {
 
   @Delete
   fun delete(vararg scores: Score)
+
+  companion object {
+    const val CREATION_DATE_SELECTION = "WHERE creation_date BETWEEN :arg0 AND :arg1"
+  }
 
 }

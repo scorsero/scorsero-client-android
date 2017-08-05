@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import io.github.dmi3coder.scorsero.R
+import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable
 import kotlinx.android.synthetic.main.item_drawer_option.view.count
 import kotlinx.android.synthetic.main.item_drawer_option.view.title
@@ -28,7 +29,8 @@ class DrawerAdapter(var items: Array<NavigationItem>) : RecyclerView.Adapter<Dra
     val currentItem = items[position]
 
     view.title.text = holder.itemView.context.getString(currentItem.name)
-    holder.subscription = currentItem.itemCount.subscribe {
+    holder.subscription = currentItem.itemCount.observeOn(
+        AndroidSchedulers.mainThread()).subscribe {
       view.count.text = it.toString()
     }
   }

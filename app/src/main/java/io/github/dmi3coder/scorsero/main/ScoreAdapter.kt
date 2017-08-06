@@ -31,13 +31,20 @@ class ScoreAdapter(val presenter: Presenter) : RecyclerView.Adapter<ScoreViewHol
     val onTaskCompletedListener: (View) -> Unit = {
       presenter.completeScore(score)
     }
-    if (score.completed ?: false) {
-      itemView.title.paintFlags = Paint.STRIKE_THRU_TEXT_FLAG
-    } else {
-      itemView.title.paintFlags = 0
+    arrayOf(itemView.title, itemView.description).forEach {
+      if (score.completed ?: false) {
+        it.paintFlags = Paint.STRIKE_THRU_TEXT_FLAG
+      } else {
+        it.paintFlags = 0
+      }
     }
     itemView.apply {
       description.text = score.description ?: "This score needs description"
+      title.setTextColor(Color.WHITE)
+      score.priority?.apply {
+        val priorityColor = ScoreStarterController.priorities[this - 1].second
+        title.setTextColor(context.getColor(priorityColor))
+      }
       setOnClickListener(onTaskCompletedListener)
       completion_checkbox.setOnClickListener(onTaskCompletedListener)
       setOnLongClickListener {

@@ -31,6 +31,7 @@
       app:layout_constraintStart_toStartOf="@+id/title"
       app:layout_constraintTop_toBottomOf="@+id/title"
       tools:text="Score description"
+      android:textSize="14sp"
       />
 
   <CheckBox

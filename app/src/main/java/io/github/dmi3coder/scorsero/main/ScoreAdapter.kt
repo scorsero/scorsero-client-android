@@ -4,6 +4,7 @@ import android.graphics.Color
 import android.graphics.Paint
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import io.github.dmi3coder.scorsero.R
 import io.github.dmi3coder.scorsero.data.Score
@@ -27,7 +28,9 @@ class ScoreAdapter(val presenter: Presenter) : RecyclerView.Adapter<ScoreViewHol
     holder!!.itemView.title.text = score.title ?: "Empty item"
     val itemView = holder.itemView
     itemView.completion_checkbox.isChecked = score.completed?:false
-
+    val onTaskCompletedListener: (View) -> Unit = {
+      presenter.completeScore(score)
+    }
     if (score.completed ?: false) {
       itemView.title.paintFlags = Paint.STRIKE_THRU_TEXT_FLAG
     } else {
@@ -35,9 +38,8 @@ class ScoreAdapter(val presenter: Presenter) : RecyclerView.Adapter<ScoreViewHol
     }
     itemView.apply {
       description.text = score.description ?: "This score needs description"
-      setOnClickListener {
-        presenter.completeScore(score)
-      }
+      setOnClickListener(onTaskCompletedListener)
+      completion_checkbox.setOnClickListener(onTaskCompletedListener)
       setOnLongClickListener {
         presenter.removeScore(score)
         true

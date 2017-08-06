@@ -1,6 +1,7 @@
 package io.github.dmi3coder.scorsero
 
 import android.app.Application
+import com.facebook.stetho.Stetho
 import io.github.dmi3coder.scorsero.data.source.ScoreRepository
 
 /**
@@ -11,6 +12,7 @@ class MainApplication : Application() {
   override fun onCreate() {
     super.onCreate()
     ScoreRepository.init(this)
+    Stetho.initializeWithDefaults(this)
   }
 
 }

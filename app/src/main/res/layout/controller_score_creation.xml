@@ -7,11 +7,6 @@
     android:orientation="vertical"
     >
 
-  <android.support.v7.widget.RecyclerView
-      android:id="@+id/field_list"
-      android:layout_width="match_parent"
-      android:layout_height="match_parent"
-      />
 
   <android.support.design.widget.FloatingActionButton
       android:id="@+id/creation_fab"
@@ -20,8 +15,15 @@
       android:layout_margin="16dp"
       android:src="@drawable/ic_add"
       app:fabSize="normal"
-      app:layout_anchor="@id/field_list"
+      app:layout_anchor="@+id/field_list"
       app:layout_anchorGravity="bottom|end"
       />
+
+  <android.support.v7.widget.RecyclerView
+      android:id="@id/field_list"
+      android:layout_width="match_parent"
+      android:layout_height="match_parent"
+      />
+
 
 </android.support.design.widget.CoordinatorLayout>

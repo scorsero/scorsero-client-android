@@ -7,8 +7,8 @@ import android.view.ViewGroup
 import com.bluelinelabs.conductor.Controller
 import io.github.dmi3coder.scorsero.R
 import io.github.dmi3coder.scorsero.data.Score
-import io.github.dmi3coder.scorsero.data.source.ScoreRepository
 import io.github.dmi3coder.scorsero.score.ScoreCreationContract.Presenter
+import io.github.dmi3coder.scorsero.score.ScoreCreationContract.ViewState.OPEN
 import kotlinx.android.synthetic.main.controller_score_creation.view.creation_fab
 import kotlinx.android.synthetic.main.controller_score_creation.view.field_list
 
@@ -21,21 +21,8 @@ class ScoreCreationController(
   internal lateinit var view: View
 
   override fun onCreateView(inflater: LayoutInflater, container: ViewGroup): View {
-    val view = inflater.inflate(R.layout.controller_score_creation, container, false)
-    view.post {
-      view.creation_fab.requestLayout()
-    }
-    view.field_list.layoutManager = LinearLayoutManager(activity)
-    view.field_list.adapter = ScoreFieldAdapter(operationScore)
-    view.creation_fab.setOnClickListener {
-      val repository = ScoreRepository.getInstance()
-      if (operationScore.id != null) {
-        repository.update(operationScore)
-      } else {
-        repository.insert(operationScore)
-      }
-      router.handleBack()
-    }
+    view = inflater.inflate(R.layout.controller_score_creation, container, false)
+    ScoreCreationPresenter(this).start(operationScore)
     return view
   }
 
@@ -44,13 +31,26 @@ class ScoreCreationController(
   }
 
   override fun setVisibility(visible: Boolean) {
+    TODO("Unsupported")
   }
 
   override fun setScore(scoreData: Score?) {
-    TODO("not implemented")
+    if(scoreData?.id != null){
+      view.creation_fab.setImageResource(R.drawable.ic_check)
+      activity?.title = "Edit Score"
+    } else {
+      activity?.title = "New Score"
+    }
+    operationScore = scoreData ?: Score()
+    view.field_list.layoutManager = LinearLayoutManager(activity)
+    view.field_list.adapter = ScoreFieldAdapter(operationScore)
+    view.creation_fab.setOnClickListener {
+      presenter.processScore(operationScore, OPEN)
+      router.handleBack()
+    }
   }
 
   override fun clear() {
-    TODO("not implemented")
+    setScore(null)
   }
 }

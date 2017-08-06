@@ -1,7 +1,5 @@
 package io.github.dmi3coder.scorsero.data.source.local
 
-import android.util.Log
-import com.github.debop.kodatimes.dateTimeUTC
 import io.github.dmi3coder.scorsero.data.Score
 import io.github.dmi3coder.scorsero.data.source.ScoreDataSource
 import io.reactivex.Flowable
@@ -25,9 +23,15 @@ class ScoreLocalDataSource(val dao: ScoreDao) : ScoreDataSource {
   override fun subscribeAllScores(): Flowable<List<Score>> = dao.subscribeAll()
 
   override fun subscribeScoresFor(date: DateTime): Flowable<List<Score>> {
-    val toTime = date.dayOfYear().roundCeilingCopy().toDate().time
     val fromTime = date.dayOfYear().roundFloorCopy().toDate().time
+    val toTime = date.dayOfYear().roundCeilingCopy().toDate().time
     return dao.subscribeAllForDate(fromTime, toTime)
+  }
+
+  override fun subscribeScoreCountFor(fromDate: DateTime, toDate: DateTime): Flowable<Int> {
+    val fromTime = fromDate.dayOfYear().roundFloorCopy().toDate().time
+    val toTime = toDate.dayOfYear().roundCeilingCopy().toDate().time
+    return dao.subscribeElementCount(fromTime, toTime)
   }
 
   override fun insert(vararg score: Score): Int {

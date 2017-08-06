@@ -1,3 +1,7 @@
 <resources>
   <string name="app_name">Scorsero</string>
+  <string name="drawer_options_todo">Todo</string>
+  <string name="drawer_options_today">Today</string>
+  <string name="drawer_options_tomorrow">Tomorrow</string>
+  <string name="drawer_options_next_7_days">Next 7 days</string>
 </resources>

@@ -12,10 +12,13 @@ interface MainContract {
 
   interface View : BaseView<Presenter> {
     fun showScores(scores: Flowable<List<Score>>)
+    fun editScore(score: Score)
+    fun setDate(date: String)
   }
 
   interface Presenter : BasePresenter {
     fun refreshScores()
+    fun editScore(score: Score)
     fun removeScore(score: Score)
     fun completeScore(score: Score)
   }

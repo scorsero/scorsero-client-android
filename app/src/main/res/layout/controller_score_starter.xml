@@ -4,6 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:clickable="true"
+    android:focusable="true"
     android:orientation="vertical"
     tools:background="@color/colorBottomSheet"
     tools:gravity="bottom"
@@ -30,9 +32,9 @@
       android:layout_marginEnd="16dp"
       android:layout_marginStart="8dp"
       android:layout_marginTop="12dp"
-      android:textColor="@android:color/white"
       android:backgroundTint="@android:color/white"
       android:hint="Title"
+      android:textColor="@android:color/white"
       android:textColorHint="@android:color/white"
       />
 
@@ -49,14 +51,14 @@
 
   <!-- TODO: load elements dynamically -->
   <LinearLayout
+      android:id="@+id/priority_holder"
       android:layout_width="match_parent"
       android:layout_height="wrap_content"
+      android:layout_gravity="start"
       android:layout_marginEnd="8dp"
       android:layout_marginStart="8dp"
       android:gravity="center"
       android:orientation="horizontal"
-      android:layout_gravity="start"
-      android:id="@+id/priority_holder"
       >
 
   </LinearLayout>

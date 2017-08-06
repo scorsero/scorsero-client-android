@@ -82,56 +82,44 @@ class MainControllerTest {
 
   @Test
   fun mainController_onCreateTasksWithDifferCircles_noCrashes() {
-    val floatingActionButton = onView(allOf(withId(R.id.main_starter_fab),
-        childAtPosition(childAtPosition(withId(android.R.id.content), 0), 2), isDisplayed()))
+    val floatingActionButton = onView(allOf(withId(R.id.main_starter_fab)))
     floatingActionButton.perform(click())
 
-    val appCompatEditText = onView(allOf(withId(R.id.title_field),
-        childAtPosition(childAtPosition(withId(R.id.bottom_sheet_frame), 0), 1), isDisplayed()))
-    appCompatEditText.perform(replaceText("а"), closeSoftKeyboard())
+    val appCompatEditText = onView(allOf(withId(R.id.title_field), isDisplayed()))
+    appCompatEditText.perform(replaceText("first"), closeSoftKeyboard())
 
-    val view = onView(allOf(childAtPosition(allOf(withId(R.id.priority_holder),
-        childAtPosition(withClassName(`is`("android.widget.LinearLayout")), 3)), 0), isDisplayed()))
+    val view = onView(withId(R.id.priority_holder))
     view.perform(click())
 
-    val floatingActionButton2 = onView(allOf(withId(R.id.main_starter_fab),
-        childAtPosition(childAtPosition(withId(android.R.id.content), 0), 2), isDisplayed()))
+    val floatingActionButton2 = onView(allOf(withId(R.id.main_starter_fab),  isDisplayed()))
+
     floatingActionButton2.perform(click())
 
-    val floatingActionButton3 = onView(allOf(withId(R.id.main_starter_fab),
-        childAtPosition(childAtPosition(withId(android.R.id.content), 0), 2), isDisplayed()))
+    val floatingActionButton3 = onView(allOf(withId(R.id.main_starter_fab) , isDisplayed()))
     floatingActionButton3.perform(click())
 
-    val appCompatEditText2 = onView(allOf(withId(R.id.title_field),
-        childAtPosition(childAtPosition(withId(R.id.bottom_sheet_frame), 0), 1), isDisplayed()))
+    val appCompatEditText2 = onView(allOf(withId(R.id.title_field), isDisplayed()))
     appCompatEditText2.perform(click())
 
-    val appCompatEditText3 = onView(allOf(withId(R.id.title_field),
-        childAtPosition(childAtPosition(withId(R.id.bottom_sheet_frame), 0), 1), isDisplayed()))
-    appCompatEditText3.perform(replaceText("б"), closeSoftKeyboard())
+    val appCompatEditText3 = onView(allOf(withId(R.id.title_field), isDisplayed()))
+    appCompatEditText3.perform(replaceText("second"), closeSoftKeyboard())
 
-    val floatingActionButton4 = onView(allOf(withId(R.id.main_starter_fab),
-        childAtPosition(childAtPosition(withId(android.R.id.content), 0), 2), isDisplayed()))
+    val floatingActionButton4 = onView(allOf(withId(R.id.main_starter_fab), isDisplayed()))
     floatingActionButton4.perform(click())
 
-    val floatingActionButton5 = onView(allOf(withId(R.id.main_starter_fab),
-        childAtPosition(childAtPosition(withId(android.R.id.content), 0), 2), isDisplayed()))
+    val floatingActionButton5 = onView(allOf(withId(R.id.main_starter_fab),isDisplayed()))
     floatingActionButton5.perform(click())
 
-    val appCompatEditText4 = onView(allOf(withId(R.id.title_field),
-        childAtPosition(childAtPosition(withId(R.id.bottom_sheet_frame), 0), 1), isDisplayed()))
+    val appCompatEditText4 = onView(allOf(withId(R.id.title_field), isDisplayed()))
     appCompatEditText4.perform(click())
 
-    val appCompatEditText5 = onView(allOf(withId(R.id.title_field),
-        childAtPosition(childAtPosition(withId(R.id.bottom_sheet_frame), 0), 1), isDisplayed()))
-    appCompatEditText5.perform(replaceText("в"), closeSoftKeyboard())
+    val appCompatEditText5 = onView(allOf(withId(R.id.title_field), isDisplayed()))
+    appCompatEditText5.perform(replaceText("last"), closeSoftKeyboard())
 
-    val view2 = onView(allOf(childAtPosition(allOf(withId(R.id.priority_holder),
-        childAtPosition(withClassName(`is`("android.widget.LinearLayout")), 3)), 1), isDisplayed()))
+    val view2 = onView(withId(R.id.priority_holder))
     view2.perform(click())
 
-    val floatingActionButton6 = onView(allOf(withId(R.id.main_starter_fab),
-        childAtPosition(childAtPosition(withId(android.R.id.content), 0), 2), isDisplayed()))
+    val floatingActionButton6 = onView(allOf(withId(R.id.main_starter_fab), isDisplayed()))
     floatingActionButton6.perform(click())
   }
 
@@ -152,8 +140,7 @@ class MainControllerTest {
   //TODO implement checking over the current screen
 
   fun createScore(testString: String) {
-    val floatingActionButton = onView(allOf(withId(R.id.main_starter_fab),
-        childAtPosition(childAtPosition(withId(android.R.id.content), 0), 2), isDisplayed()))
+    val floatingActionButton = onView(allOf(withId(R.id.main_starter_fab), isDisplayed()))
     floatingActionButton.perform(click())
 
     val appCompatEditText = onView(withId(R.id.title_field))
@@ -163,8 +150,7 @@ class MainControllerTest {
         childAtPosition(withClassName(`is`("android.widget.LinearLayout")), 3)), 0), isDisplayed()))
     view.perform(click())
 
-    val floatingActionButton2 = onView(allOf(withId(R.id.main_starter_fab),
-        childAtPosition(childAtPosition(withId(android.R.id.content), 0), 2), isDisplayed()))
+    val floatingActionButton2 = onView(allOf(withId(R.id.main_starter_fab), isDisplayed()))
     floatingActionButton2.perform(click())
   }
 

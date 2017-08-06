@@ -3,12 +3,12 @@ apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
 
 android {
-  compileSdkVersion 25
-  buildToolsVersion "26.0.0"
+  compileSdkVersion 26
+  buildToolsVersion "26.0.1"
   defaultConfig {
     applicationId "io.github.dmi3coder.scorsero"
     minSdkVersion 23
-    targetSdkVersion 25
+    targetSdkVersion 26
     versionCode 1
     versionName "0.0.9"
     testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
@@ -31,7 +31,8 @@ android {
 }
 
 ext {
-  arch_version = '1.0.0-alpha4'
+  arch_version = '1.0.0-alpha5'
+  support_version = ''
 }
 
 dependencies {
@@ -42,9 +43,9 @@ dependencies {
   implementation "android.arch.lifecycle:extensions:$arch_version"
   implementation "android.arch.persistence.room:runtime:$arch_version"
   implementation "android.arch.persistence.room:rxjava2:$arch_version"
-  implementation 'com.android.support:appcompat-v7:25.4.0'
-  implementation 'com.android.support:recyclerview-v7:25.4.0'
-  implementation 'com.android.support:design:25.4.0'
+  implementation 'com.android.support:appcompat-v7:26.0.0-alpha1'
+  implementation 'com.android.support:recyclerview-v7:26.0.0-alpha1'
+  implementation 'com.android.support:design:26.0.0-alpha1'
   implementation 'com.android.support.constraint:constraint-layout:1.0.2'
   annotationProcessor "android.arch.persistence.room:compiler:$arch_version"
   annotationProcessor "android.arch.lifecycle:compiler:$arch_version"

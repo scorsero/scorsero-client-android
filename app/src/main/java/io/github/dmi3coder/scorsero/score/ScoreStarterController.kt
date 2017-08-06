@@ -18,8 +18,8 @@ import io.github.dmi3coder.scorsero.R
 import io.github.dmi3coder.scorsero.data.Score
 import io.github.dmi3coder.scorsero.score.ScoreCreationContract.Presenter
 import io.github.dmi3coder.scorsero.score.ScoreCreationContract.ViewState.CLOSED
-import kotlinx.android.synthetic.main.controller_score_starter.view.priority_holder
-import kotlinx.android.synthetic.main.controller_score_starter.view.title_field
+import io.github.dmi3coder.scorsero.utils.hideKeyboard
+import kotlinx.android.synthetic.main.controller_score_starter.view.*
 
 
 /**
@@ -41,18 +41,16 @@ class ScoreStarterController() : Controller(), ScoreCreationContract.View, OnCli
 
       override fun onStateChanged(bottomSheet: View, newState: Int) {
         if (newState == BottomSheetBehavior.STATE_HIDDEN) {
-          val imm = activity?.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
-          imm.hideSoftInputFromWindow(bottomSheet.windowToken, 0)
+          bottomSheet.title_field.clearFocus()
+          bottomSheet.hideKeyboard()
         }
       }
-
     })
   }
 
 
   override fun onCreateView(inflater: LayoutInflater, container: ViewGroup): View {
     view = inflater.inflate(R.layout.controller_score_starter, container, false)
-    view?.setOnClickListener { } //TODO move this to other place
     fillPriorityHolder(view!!.priority_holder)
     return view!!
   }

@@ -41,7 +41,7 @@ interface ScoreDao {
   fun delete(vararg scores: Score)
 
   companion object {
-    const val CREATION_DATE_SELECTION = "WHERE creation_date BETWEEN :arg0 AND :arg1"
+    const val CREATION_DATE_SELECTION = "WHERE creation_date >= :arg0 AND creation_date < :arg1"
   }
 
 }

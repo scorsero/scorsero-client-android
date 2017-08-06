@@ -84,8 +84,9 @@ class ScoreFieldAdapter(val score: Score) : RecyclerView.Adapter<ScoreFieldHolde
         val picker = DatePicker(context)
         dialogView = picker
         okResponseHandler = { _, _ ->
-          score.creationDate = LocalDate(picker.year, picker.month.inc(),
-              picker.dayOfMonth).toDate().time
+          picker.drawingTime
+          score.creationDate = DateTime(picker.year, picker.month.inc(),
+              picker.dayOfMonth,0,0).toDate().time
         }
 
       }

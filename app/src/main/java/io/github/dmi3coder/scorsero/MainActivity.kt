@@ -14,7 +14,7 @@ import kotlinx.android.synthetic.main.activity_main.main_frame
 import kotlinx.android.synthetic.main.activity_main.toolbar
 import org.joda.time.DateTime
 
-class MainActivity : AppCompatActivity() {
+class MainActivity : AppCompatActivity(), BaseNavigator {
 
   var router: Router? = null
   var drawerRouter: Router? = null
@@ -29,8 +29,8 @@ class MainActivity : AppCompatActivity() {
 
   private fun showDrawerRootScreen(savedInstanceState: Bundle?) {
     drawerRouter = Conductor.attachRouter(this, drawer_frame, savedInstanceState)
-    if(!drawerRouter!!.hasRootController()) {
-      drawerRouter!!.setRoot(RouterTransaction.with(DrawerController()))
+    if (!drawerRouter!!.hasRootController()) {
+      drawerRouter!!.setRoot(RouterTransaction.with(DrawerController(router!!)))
     }
   }
 
@@ -42,11 +42,11 @@ class MainActivity : AppCompatActivity() {
     }
   }
 
-  fun showScreen(controller: Controller, addToBackStack: Boolean = false){
+  override fun showScreen(controller: Controller, addToBackStack: Boolean) {
     val transaction = RouterTransaction.with(controller)
-    if(addToBackStack){
+    if (addToBackStack) {
       router!!.pushController(transaction)
-    }else {
+    } else {
       router!!.replaceTopController(transaction)
     }
   }

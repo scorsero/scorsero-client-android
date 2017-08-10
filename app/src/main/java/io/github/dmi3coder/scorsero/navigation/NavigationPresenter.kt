@@ -1,5 +1,6 @@
 package io.github.dmi3coder.scorsero.navigation
 
+import io.github.dmi3coder.scorsero.BaseNavigator
 import io.github.dmi3coder.scorsero.R
 import io.github.dmi3coder.scorsero.data.source.ScoreRepository
 import io.github.dmi3coder.scorsero.navigation.NavigationContract.View
@@ -10,7 +11,8 @@ import org.joda.time.Interval
  * Created by dim3coder on 9:38 AM 8/5/17.
  */
 class NavigationPresenter(var view: View,
-    val repository: ScoreRepository = ScoreRepository.getInstance()) : NavigationContract.Presenter {
+    val repository: ScoreRepository = ScoreRepository.getInstance(),
+    val baseNavigator: BaseNavigator) : NavigationContract.Presenter {
 
 
   override fun start() {
@@ -46,7 +48,7 @@ class NavigationPresenter(var view: View,
   }
 
   override fun navigationChosen(item: NavigationItem) {
-
+    TODO("Implement MainController date choosing")
   }
 
   init {

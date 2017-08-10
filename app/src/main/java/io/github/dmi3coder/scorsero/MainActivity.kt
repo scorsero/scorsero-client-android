@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.view.Menu
 import com.bluelinelabs.conductor.Conductor
+import com.bluelinelabs.conductor.Controller
 import com.bluelinelabs.conductor.Router
 import com.bluelinelabs.conductor.RouterTransaction
 import io.github.dmi3coder.scorsero.main.MainController
@@ -34,13 +35,21 @@ class MainActivity : AppCompatActivity() {
   }
 
 
-  fun showRootScreen(savedInstanceState: Bundle?) {
+  private fun showRootScreen(savedInstanceState: Bundle?) {
     router = Conductor.attachRouter(this, main_frame, savedInstanceState)
     if (!router!!.hasRootController()) {
       router!!.setRoot(RouterTransaction.with(MainController(savedInstanceState)))
     }
   }
 
+  fun showScreen(controller: Controller, addToBackStack: Boolean = false){
+    val transaction = RouterTransaction.with(controller)
+    if(addToBackStack){
+      router!!.pushController(transaction)
+    }else {
+      router!!.replaceTopController(transaction)
+    }
+  }
 
   private fun setupToolbar() {
     setSupportActionBar(toolbar)

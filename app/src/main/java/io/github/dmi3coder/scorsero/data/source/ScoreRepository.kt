@@ -8,6 +8,7 @@ import io.github.dmi3coder.scorsero.data.source.local.ScoreLocalDataSource
 import io.reactivex.Flowable
 import io.reactivex.Single
 import org.joda.time.DateTime
+import org.joda.time.Interval
 import kotlin.reflect.KFunction1
 
 /**
@@ -32,6 +33,10 @@ class ScoreRepository(val local: ScoreDataSource) {
 
   fun subscribeScoresFor(date: DateTime): Flowable<List<Score>> {
     return Flowable.fromPublisher(local.subscribeScoresFor(date))
+  }
+
+  fun subscribeElementCountFor(interval: Interval): Flowable<Int>{
+    return this.subscribeElementCountFor(interval.start,interval.end)
   }
 
   fun subscribeElementCountFor(fromDate: DateTime, toDate: DateTime): Flowable<Int> {

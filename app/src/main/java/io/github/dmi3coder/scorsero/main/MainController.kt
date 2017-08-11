@@ -3,6 +3,7 @@ package io.github.dmi3coder.scorsero.main
 import android.os.Bundle
 import android.support.design.widget.BottomSheetBehavior
 import android.support.v7.widget.LinearLayoutManager
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -22,11 +23,14 @@ import io.reactivex.disposables.Disposable
 import kotlinx.android.synthetic.main.controller_main.view.bottom_sheet_frame
 import kotlinx.android.synthetic.main.controller_main.view.main_list
 import kotlinx.android.synthetic.main.controller_main.view.main_starter_fab
+import org.joda.time.DateTime
+import org.joda.time.Interval
+import java.io.Serializable
 
 /**
  * Created by dim3coder on 6:49 PM 7/2/17.
  */
-class MainController(val savedInstanceState: Bundle?) : Controller(), MainContract.View {
+class MainController() : Controller(), MainContract.View {
 
   var disposal: Disposable? = null
   internal lateinit var view: View
@@ -37,6 +41,8 @@ class MainController(val savedInstanceState: Bundle?) : Controller(), MainContra
   var bottomSheetBehavior: BottomSheetBehavior<View>? = null
 
 
+  private var interval: Interval? = null
+
   override fun onCreateView(inflater: LayoutInflater, container: ViewGroup): View {
     view = inflater.inflate(R.layout.controller_main, container, false)
     setupBottomSheet()
@@ -44,12 +50,17 @@ class MainController(val savedInstanceState: Bundle?) : Controller(), MainContra
     linearLayoutManager.reverseLayout = true
     linearLayoutManager.stackFromEnd = true
     view.main_list.layoutManager = linearLayoutManager
-    presenter = MainPresenter(this)
+    interval = args.getSerializable("test") as? Interval
+    if(interval == null){
+      interval = Interval(DateTime.now(),DateTime.now())
+    }
+    presenter = MainPresenter(this, interval!!)
     return view
   }
 
   override fun onRestoreViewState(view: View, savedViewState: Bundle) {
     super.onRestoreViewState(view, savedViewState)
+    interval = savedViewState.getSerializable("test") as Interval
     bottomSheetBehavior?.state = savedViewState.getInt(BOTTOM_SHEET_STATE, BottomSheetBehavior.STATE_HIDDEN)
   }
 
@@ -76,7 +87,7 @@ class MainController(val savedInstanceState: Bundle?) : Controller(), MainContra
       true
     }
     bottomSheetRouter = Conductor.attachRouter(activity!!, view.bottom_sheet_frame,
-        savedInstanceState)
+        args)
     bottomSheetRouter!!.setRoot(RouterTransaction.with(scoreStarterController))
     scoreStarterPresenter.start()
   }
@@ -98,6 +109,7 @@ class MainController(val savedInstanceState: Bundle?) : Controller(), MainContra
 
   override fun onSaveViewState(view: View, outState: Bundle) {
     super.onSaveViewState(view, outState)
+    outState.putSerializable("test",interval)
     outState.putInt(BOTTOM_SHEET_STATE,bottomSheetBehavior?.state ?: BottomSheetBehavior.STATE_HIDDEN)
   }
 
@@ -108,5 +120,6 @@ class MainController(val savedInstanceState: Bundle?) : Controller(), MainContra
 
   companion object {
     const val BOTTOM_SHEET_STATE = "io.github.dmi3coder.scorsero.main.BOTTOM_SHEET_STATE"
+//    const val
   }
 }

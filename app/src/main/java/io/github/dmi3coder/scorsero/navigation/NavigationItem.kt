@@ -1,6 +1,7 @@
 package io.github.dmi3coder.scorsero.navigation
 
 import android.support.annotation.StringRes
+import io.github.dmi3coder.scorsero.data.source.ScoreRepository
 import io.reactivex.Flowable
 import org.joda.time.Interval
 
@@ -10,4 +11,8 @@ import org.joda.time.Interval
 data class NavigationItem(
     @StringRes val name: Int,
     val range: Interval,
-    val itemCount: Flowable<Int>)
+    val repository: ScoreRepository = ScoreRepository.getInstance()
+) {
+  val itemCount: Flowable<Int> = repository.subscribeElementCountFor(range)
+
+}

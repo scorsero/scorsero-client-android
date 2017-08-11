@@ -2,24 +2,24 @@ package io.github.dmi3coder.scorsero.main
 
 import io.github.dmi3coder.scorsero.data.Score
 import io.github.dmi3coder.scorsero.data.source.ScoreRepository
-import org.joda.time.DateTime
+import org.joda.time.Interval
 
 
 /**
  * Created by dim3coder on 12:39 PM 7/3/17.
  */
-class MainPresenter(var view: MainContract.View) : MainContract.Presenter {
+class MainPresenter(var view: MainContract.View, val range: Interval) : MainContract.Presenter {
 
   lateinit var repository: ScoreRepository
 
   override fun start() {
     repository = ScoreRepository.getInstance()
     refreshScores()
-    view.setDate(DateTime.now().toString("dd MMM YYYY"))
+    view.setDate(range.start.toString("dd MMM YYYY"))
   }
 
   override fun refreshScores() {
-    view.showScores(repository.subscribeAllScores())
+    view.showScores(repository.subscribeScoresFor(range.start))
   }
 
   override fun completeScore(score: Score) {

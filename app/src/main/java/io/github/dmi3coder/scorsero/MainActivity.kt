@@ -38,7 +38,7 @@ class MainActivity : AppCompatActivity(), BaseNavigator {
   private fun showRootScreen(savedInstanceState: Bundle?) {
     router = Conductor.attachRouter(this, main_frame, savedInstanceState)
     if (!router!!.hasRootController()) {
-      router!!.setRoot(RouterTransaction.with(MainController(savedInstanceState)))
+      router!!.setRoot(RouterTransaction.with(MainController()))
     }
   }
 

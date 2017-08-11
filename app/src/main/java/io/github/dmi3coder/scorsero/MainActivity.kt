@@ -13,6 +13,7 @@ import kotlinx.android.synthetic.main.activity_main.drawer_frame
 import kotlinx.android.synthetic.main.activity_main.main_frame
 import kotlinx.android.synthetic.main.activity_main.toolbar
 import org.joda.time.DateTime
+import org.joda.time.Interval
 
 class MainActivity : AppCompatActivity(), BaseNavigator {
 
@@ -38,7 +39,13 @@ class MainActivity : AppCompatActivity(), BaseNavigator {
   private fun showRootScreen(savedInstanceState: Bundle?) {
     router = Conductor.attachRouter(this, main_frame, savedInstanceState)
     if (!router!!.hasRootController()) {
-      router!!.setRoot(RouterTransaction.with(MainController()))
+      router!!.setRoot(RouterTransaction.with(
+          MainController().apply {
+            this.args.putSerializable(
+                MainController.CURRENT_DATE_RANGE,
+                Interval(DateTime(), DateTime()))
+          }
+      ))
     }
   }
 

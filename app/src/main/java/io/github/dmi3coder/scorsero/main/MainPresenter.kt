@@ -2,13 +2,15 @@ package io.github.dmi3coder.scorsero.main
 
 import io.github.dmi3coder.scorsero.data.Score
 import io.github.dmi3coder.scorsero.data.source.ScoreRepository
+import org.joda.time.DateTime
 import org.joda.time.Interval
 
 
 /**
  * Created by dim3coder on 12:39 PM 7/3/17.
  */
-class MainPresenter(var view: MainContract.View, val range: Interval) : MainContract.Presenter {
+class MainPresenter(var view: MainContract.View,
+    val range: Interval = Interval(DateTime(), DateTime())) : MainContract.Presenter {
 
   lateinit var repository: ScoreRepository
 

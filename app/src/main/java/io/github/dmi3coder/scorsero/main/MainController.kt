@@ -3,7 +3,6 @@ package io.github.dmi3coder.scorsero.main
 import android.os.Bundle
 import android.support.design.widget.BottomSheetBehavior
 import android.support.v7.widget.LinearLayoutManager
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -11,6 +10,7 @@ import com.bluelinelabs.conductor.Conductor
 import com.bluelinelabs.conductor.Controller
 import com.bluelinelabs.conductor.Router
 import com.bluelinelabs.conductor.RouterTransaction
+import io.github.dmi3coder.scorsero.BuildConfig
 import io.github.dmi3coder.scorsero.R
 import io.github.dmi3coder.scorsero.data.Score
 import io.github.dmi3coder.scorsero.main.MainContract.Presenter
@@ -23,9 +23,7 @@ import io.reactivex.disposables.Disposable
 import kotlinx.android.synthetic.main.controller_main.view.bottom_sheet_frame
 import kotlinx.android.synthetic.main.controller_main.view.main_list
 import kotlinx.android.synthetic.main.controller_main.view.main_starter_fab
-import org.joda.time.DateTime
 import org.joda.time.Interval
-import java.io.Serializable
 
 /**
  * Created by dim3coder on 6:49 PM 7/2/17.
@@ -50,18 +48,22 @@ class MainController() : Controller(), MainContract.View {
     linearLayoutManager.reverseLayout = true
     linearLayoutManager.stackFromEnd = true
     view.main_list.layoutManager = linearLayoutManager
-    interval = args.getSerializable("test") as? Interval
-    if(interval == null){
-      interval = Interval(DateTime.now(),DateTime.now())
+    if (interval == null) {
+        interval = args.getSerializable(CURRENT_DATE_RANGE) as? Interval
     }
     presenter = MainPresenter(this, interval!!)
     return view
   }
 
+  override fun onRestoreInstanceState(savedInstanceState: Bundle) {
+    super.onRestoreInstanceState(savedInstanceState)
+    interval = savedInstanceState.getSerializable(CURRENT_DATE_RANGE) as Interval
+  }
+
   override fun onRestoreViewState(view: View, savedViewState: Bundle) {
     super.onRestoreViewState(view, savedViewState)
-    interval = savedViewState.getSerializable("test") as Interval
-    bottomSheetBehavior?.state = savedViewState.getInt(BOTTOM_SHEET_STATE, BottomSheetBehavior.STATE_HIDDEN)
+    bottomSheetBehavior?.state = savedViewState.getInt(BOTTOM_SHEET_STATE,
+        BottomSheetBehavior.STATE_HIDDEN)
   }
 
   override fun setPresenter(presenter: Presenter) {
@@ -107,10 +109,15 @@ class MainController() : Controller(), MainContract.View {
   }
 
 
+  override fun onSaveInstanceState(outState: Bundle) {
+    outState.putSerializable(CURRENT_DATE_RANGE, interval)
+    super.onSaveInstanceState(outState)
+  }
+
   override fun onSaveViewState(view: View, outState: Bundle) {
+    outState.putInt(BOTTOM_SHEET_STATE,
+        bottomSheetBehavior?.state ?: BottomSheetBehavior.STATE_HIDDEN)
     super.onSaveViewState(view, outState)
-    outState.putSerializable("test",interval)
-    outState.putInt(BOTTOM_SHEET_STATE,bottomSheetBehavior?.state ?: BottomSheetBehavior.STATE_HIDDEN)
   }
 
   override fun onDestroyView(view: View) {
@@ -119,7 +126,7 @@ class MainController() : Controller(), MainContract.View {
   }
 
   companion object {
-    const val BOTTOM_SHEET_STATE = "io.github.dmi3coder.scorsero.main.BOTTOM_SHEET_STATE"
-//    const val
+    const val BOTTOM_SHEET_STATE = "${BuildConfig.APPLICATION_ID}.main.BOTTOM_SHEET_STATE"
+    const val CURRENT_DATE_RANGE = "${BuildConfig.APPLICATION_ID}.main.CURRENT_DATE_RANGE"
   }
 }

@@ -45,7 +45,7 @@ class NavigationPresenter(var view: View,
 
   override fun navigationChosen(item: NavigationItem) {
     val controller = MainController()
-    controller.args.putSerializable("test",item.range)
+    controller.args.putSerializable(MainController.CURRENT_DATE_RANGE,item.range)
     baseNavigator.showScreen(controller)
   }
 

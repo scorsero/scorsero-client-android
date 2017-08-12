@@ -17,7 +17,6 @@ interface MainContract {
   }
 
   interface Presenter : BasePresenter {
-    fun refreshScores()
     fun editScore(score: Score)
     fun removeScore(score: Score)
     fun completeScore(score: Score)

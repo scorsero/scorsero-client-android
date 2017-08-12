@@ -28,7 +28,7 @@ import org.joda.time.Interval
 /**
  * Created by dim3coder on 6:49 PM 7/2/17.
  */
-class MainController() : Controller(), MainContract.View {
+class MainController : Controller(), MainContract.View {
 
   var disposal: Disposable? = null
   internal lateinit var view: View
@@ -49,7 +49,7 @@ class MainController() : Controller(), MainContract.View {
     linearLayoutManager.stackFromEnd = true
     view.main_list.layoutManager = linearLayoutManager
     if (interval == null) {
-        interval = args.getSerializable(CURRENT_DATE_RANGE) as? Interval
+      interval = args.getSerializable(CURRENT_DATE_RANGE) as? Interval
     }
     presenter = MainPresenter(this, interval!!)
     return view

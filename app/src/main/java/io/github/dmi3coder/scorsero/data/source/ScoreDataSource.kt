@@ -21,6 +21,8 @@ interface ScoreDataSource {
 
   fun subscribeScoresFor(date: DateTime): Flowable<List<Score>>
 
+  fun subscribeScoresFor(interval: Interval): Flowable<List<Score>>
+
   fun subscribeScoreCountFor(fromDate: DateTime, toDate: DateTime): Flowable<Int>
 
   fun insert(vararg score: Score): Int

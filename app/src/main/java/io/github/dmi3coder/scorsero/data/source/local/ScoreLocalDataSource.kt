@@ -4,6 +4,7 @@ import io.github.dmi3coder.scorsero.data.Score
 import io.github.dmi3coder.scorsero.data.source.ScoreDataSource
 import io.reactivex.Flowable
 import org.joda.time.DateTime
+import org.joda.time.Interval
 
 /**
  * Created by dim3coder on 9:55 AM 7/16/17.
@@ -25,6 +26,12 @@ class ScoreLocalDataSource(val dao: ScoreDao) : ScoreDataSource {
   override fun subscribeScoresFor(date: DateTime): Flowable<List<Score>> {
     val fromTime = date.dayOfYear().roundFloorCopy().toDate().time
     val toTime = date.dayOfYear().roundCeilingCopy().toDate().time
+    return dao.subscribeAllForDate(fromTime, toTime)
+  }
+
+  override fun subscribeScoresFor(interval: Interval): Flowable<List<Score>> {
+    val fromTime = interval.start.dayOfYear().roundFloorCopy().toDate().time
+    val toTime = interval.end.dayOfYear().roundCeilingCopy().toDate().time
     return dao.subscribeAllForDate(fromTime, toTime)
   }
 

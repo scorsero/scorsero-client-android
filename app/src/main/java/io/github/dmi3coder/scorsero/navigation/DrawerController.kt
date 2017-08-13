@@ -1,5 +1,7 @@
 package io.github.dmi3coder.scorsero.navigation
 
+import android.os.Bundle
+import android.support.v4.widget.DrawerLayout
 import android.support.v7.widget.LinearLayoutManager
 import android.view.LayoutInflater
 import android.view.View
@@ -7,8 +9,10 @@ import android.view.ViewGroup
 import com.bluelinelabs.conductor.Controller
 import com.bluelinelabs.conductor.Router
 import io.github.dmi3coder.scorsero.BaseNavigator
+import io.github.dmi3coder.scorsero.MainActivity
 import io.github.dmi3coder.scorsero.R
 import io.github.dmi3coder.scorsero.navigation.NavigationContract.Presenter
+import kotlinx.android.synthetic.main.activity_main.drawer_layout
 import kotlinx.android.synthetic.main.controller_drawer.view.drawer_list
 
 /**
@@ -23,9 +27,11 @@ class DrawerController() : Controller(), NavigationContract.View {
   lateinit var mainRouter: Router
   lateinit internal var presenter: Presenter
   internal var view: View? = null
+  lateinit var drawer: DrawerLayout
 
   override fun onCreateView(inflater: LayoutInflater, container: ViewGroup): View {
     view = inflater.inflate(R.layout.controller_drawer, container, false)
+    drawer = (activity as MainActivity).drawer_layout //The hell I need this complexity?
     val presenter = NavigationPresenter(this, baseNavigator = activity as BaseNavigator)
     presenter.start()
     return view!!
@@ -35,9 +41,13 @@ class DrawerController() : Controller(), NavigationContract.View {
     this.presenter = presenter
   }
 
+  override fun onSaveViewState(view: View, outState: Bundle) {
+    super.onSaveViewState(view, outState)
+    (view.drawer_list.adapter as DrawerAdapter).selectSubscription.value
+  }
 
   override fun showNavigationItems(items: Array<NavigationItem>) {
     view!!.drawer_list.layoutManager = LinearLayoutManager(activity)
-    view!!.drawer_list.adapter = DrawerAdapter(items, presenter)
+    view!!.drawer_list.adapter = DrawerAdapter(items, presenter,drawer)
   }
 }

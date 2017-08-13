@@ -51,7 +51,12 @@ class MainController : Controller(), MainContract.View {
     if (interval == null) {
       interval = args.getSerializable(CURRENT_DATE_RANGE) as? Interval
     }
-    presenter = MainPresenter(this, interval!!)
+    var title: String? = null
+    val argTitle = args.getInt(CURRENT_TITLE)
+    if (argTitle != 0) {
+      title = activity!!.getString(argTitle)
+    }
+    presenter = MainPresenter(this, interval!!, title)
     return view
   }
 
@@ -64,6 +69,7 @@ class MainController : Controller(), MainContract.View {
     super.onRestoreViewState(view, savedViewState)
     bottomSheetBehavior?.state = savedViewState.getInt(BOTTOM_SHEET_STATE,
         BottomSheetBehavior.STATE_HIDDEN)
+    presenter.restoreTitle(savedViewState.getString(CURRENT_TITLE))
   }
 
   override fun setPresenter(presenter: Presenter) {
@@ -104,8 +110,10 @@ class MainController : Controller(), MainContract.View {
     })
   }
 
-  override fun setDate(date: String) {
-    activity?.title = date
+  override fun setDate(date: String?) {
+    date?.let {
+      activity?.title = date
+    }
   }
 
 
@@ -117,6 +125,7 @@ class MainController : Controller(), MainContract.View {
   override fun onSaveViewState(view: View, outState: Bundle) {
     outState.putInt(BOTTOM_SHEET_STATE,
         bottomSheetBehavior?.state ?: BottomSheetBehavior.STATE_HIDDEN)
+    outState.putString(CURRENT_TITLE, activity?.title.toString())
     super.onSaveViewState(view, outState)
   }
 
@@ -128,5 +137,6 @@ class MainController : Controller(), MainContract.View {
   companion object {
     const val BOTTOM_SHEET_STATE = "${BuildConfig.APPLICATION_ID}.main.BOTTOM_SHEET_STATE"
     const val CURRENT_DATE_RANGE = "${BuildConfig.APPLICATION_ID}.main.CURRENT_DATE_RANGE"
+    const val CURRENT_TITLE = "${BuildConfig.APPLICATION_ID}.main.CURRENT_TITLE"
   }
 }

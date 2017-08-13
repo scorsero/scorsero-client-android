@@ -9,14 +9,15 @@ import org.joda.time.Interval
  * Created by dim3coder on 12:39 PM 7/3/17.
  */
 class MainPresenter(var view: MainContract.View,
-    val interval: Interval) : MainContract.Presenter {
+    val interval: Interval,
+    var title: String? = null) : MainContract.Presenter {
 
   lateinit var repository: ScoreRepository
 
   override fun start() {
     repository = ScoreRepository.getInstance()
     subscribeScores(interval)
-    view.setDate(interval.start.toString("dd MMM YYYY"))
+    view.setDate(title ?: interval.start.toString("dd MMM YYYY"))
   }
 
   private fun subscribeScores(interval: Interval) {
@@ -41,6 +42,10 @@ class MainPresenter(var view: MainContract.View,
     Thread {
       repository.delete(score)
     }.start()
+  }
+
+  override fun restoreTitle(title: String?) {
+   this.title = title
   }
 
   init {

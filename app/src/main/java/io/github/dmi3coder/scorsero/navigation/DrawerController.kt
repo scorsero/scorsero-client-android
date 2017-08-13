@@ -9,6 +9,7 @@ import android.view.ViewGroup
 import com.bluelinelabs.conductor.Controller
 import com.bluelinelabs.conductor.Router
 import io.github.dmi3coder.scorsero.BaseNavigator
+import io.github.dmi3coder.scorsero.BuildConfig
 import io.github.dmi3coder.scorsero.MainActivity
 import io.github.dmi3coder.scorsero.R
 import io.github.dmi3coder.scorsero.navigation.NavigationContract.Presenter
@@ -28,6 +29,7 @@ class DrawerController() : Controller(), NavigationContract.View {
   lateinit internal var presenter: Presenter
   internal var view: View? = null
   lateinit var drawer: DrawerLayout
+  private var adapter: DrawerAdapter? = null
 
   override fun onCreateView(inflater: LayoutInflater, container: ViewGroup): View {
     view = inflater.inflate(R.layout.controller_drawer, container, false)
@@ -37,17 +39,28 @@ class DrawerController() : Controller(), NavigationContract.View {
     return view!!
   }
 
+  override fun onRestoreViewState(view: View, savedViewState: Bundle) {
+    super.onRestoreViewState(view, savedViewState)
+    adapter?.selectSubscription?.onNext(savedViewState.getInt(DRAWER_SELECTED_POSITION))
+  }
+
   override fun setPresenter(presenter: Presenter) {
     this.presenter = presenter
   }
 
   override fun onSaveViewState(view: View, outState: Bundle) {
     super.onSaveViewState(view, outState)
-    (view.drawer_list.adapter as DrawerAdapter).selectSubscription.value
+    outState.putInt(DRAWER_SELECTED_POSITION,
+        (view.drawer_list.adapter as DrawerAdapter).selectSubscription.value)
   }
 
   override fun showNavigationItems(items: Array<NavigationItem>) {
     view!!.drawer_list.layoutManager = LinearLayoutManager(activity)
-    view!!.drawer_list.adapter = DrawerAdapter(items, presenter,drawer)
+    adapter = DrawerAdapter(items, presenter, drawer)
+    view!!.drawer_list.adapter = adapter
+  }
+
+  companion object {
+    val DRAWER_SELECTED_POSITION = "${BuildConfig.APPLICATION_ID}.navigation.DRAWER_SELECTED_POSITION"
   }
 }

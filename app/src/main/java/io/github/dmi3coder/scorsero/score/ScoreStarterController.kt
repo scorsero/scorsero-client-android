@@ -72,7 +72,9 @@ class ScoreStarterController() : Controller(), ScoreCreationContract.View, OnCli
 
 
   fun scoreToState(scoreData: Score?) {
-    view!!.title_field.setText(scoreData?.title)
+    activity!!.runOnUiThread {
+      view!!.title_field.setText(scoreData?.title)
+    }
   }
 
   fun fillPriorityHolder(view: LinearLayout) {
@@ -99,6 +101,10 @@ class ScoreStarterController() : Controller(), ScoreCreationContract.View, OnCli
   override fun clear() {
     activity?.runOnUiThread {
       view!!.title_field.text = null
+      val priority_holder = view!!.priority_holder
+      for(itemPosition in 0.rangeTo(priority_holder.childCount - 1)){
+        priority_holder.getChildAt(itemPosition).setStrokeColor(0)
+      }
     }
   }
 
@@ -144,6 +150,10 @@ val Int.dp: Int
 val Int.px: Int
   get() = (this * Resources.getSystem().displayMetrics.density).toInt()
 
+
+fun View.setStrokeColor(strokeColor: Int){
+  (background as GradientDrawable).setStroke(2, strokeColor)
+}
 fun View.setColors(fillColor: Int, strokeColor: Int) {
   (background as GradientDrawable).setStroke(2, strokeColor)
   (background as GradientDrawable).setColor(fillColor)

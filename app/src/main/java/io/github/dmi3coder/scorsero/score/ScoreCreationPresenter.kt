@@ -33,5 +33,7 @@ class ScoreCreationPresenter(
       repository.update(scoreData)
     }
     view.clear()
+    operationScore = Score()
+    view.setScore(operationScore)
   }
 }

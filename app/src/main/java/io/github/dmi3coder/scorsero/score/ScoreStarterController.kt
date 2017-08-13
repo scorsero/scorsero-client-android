@@ -19,7 +19,8 @@ import io.github.dmi3coder.scorsero.data.Score
 import io.github.dmi3coder.scorsero.score.ScoreCreationContract.Presenter
 import io.github.dmi3coder.scorsero.score.ScoreCreationContract.ViewState.CLOSED
 import io.github.dmi3coder.scorsero.utils.hideKeyboard
-import kotlinx.android.synthetic.main.controller_score_starter.view.*
+import kotlinx.android.synthetic.main.controller_score_starter.view.priority_holder
+import kotlinx.android.synthetic.main.controller_score_starter.view.title_field
 
 
 /**
@@ -128,12 +129,12 @@ class ScoreStarterController() : Controller(), ScoreCreationContract.View, OnCli
   companion object {
     //TODO: come up with priorities colors
     val priorities: Array<Pair<Int, Int>> = arrayOf(
-        Pair(1, android.R.color.holo_red_dark),
-        Pair(2, android.R.color.holo_green_dark),
-        Pair(3, android.R.color.holo_blue_light),
-        Pair(4, android.R.color.holo_blue_bright),
-        Pair(5, android.R.color.holo_blue_dark),
-        Pair(6, android.R.color.holo_orange_light)
+        Pair(0, android.R.color.holo_red_dark),
+        Pair(1, android.R.color.holo_green_dark),
+        Pair(2, android.R.color.holo_blue_light),
+        Pair(3, android.R.color.holo_blue_bright),
+        Pair(4, android.R.color.holo_blue_dark),
+        Pair(5, android.R.color.holo_orange_light)
     )
   }
 }

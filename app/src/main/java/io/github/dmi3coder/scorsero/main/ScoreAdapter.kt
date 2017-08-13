@@ -42,7 +42,7 @@ class ScoreAdapter(val presenter: Presenter) : RecyclerView.Adapter<ScoreViewHol
       description.text = score.description ?: "This score needs description"
       title.setTextColor(Color.WHITE)
       score.priority?.apply {
-        val priorityColor = ScoreStarterController.priorities[this - 1].second
+        val priorityColor = ScoreStarterController.priorities.find { it.first == this }!!.second
         title.setTextColor(context.getColor(priorityColor))
       }
       setOnClickListener(onTaskCompletedListener)

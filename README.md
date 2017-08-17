@@ -10,11 +10,12 @@
 - [X] Score displaying
 
 ### v0.2
-- Daily score creation with saving
-  - at 00:00 scores archive
-  - people can create new scores for a next day
-- Detailed score creation
-- Score editing
+- [X] Daily score creation with saving
+- [X] Detailed score creation
+- [X] Score editing
+
+### v0.3
+//TODO
 
 ### Backlog
 - Score approving

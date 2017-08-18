@@ -18,6 +18,7 @@
       android:layout_height="wrap_content"
       android:layout_marginBottom="16dp"
       android:layout_marginEnd="16dp"
+      android:src="@drawable/ic_add"
       app:fabSize="normal"
       app:layout_anchor="@+id/bottom_sheet_frame"
       app:layout_anchorGravity="right|top"

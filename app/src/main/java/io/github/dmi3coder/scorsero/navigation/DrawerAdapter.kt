@@ -22,7 +22,7 @@ import kotlinx.android.synthetic.main.item_drawer_option.view.title
 
 class DrawerAdapter(var items: Array<NavigationItem>,
     val presenter: Presenter, val drawerLayout: DrawerLayout,
-    startPosition: Int = 0) : RecyclerView.Adapter<DrawerItemHolder>() {
+    startPosition: Int = 1) : RecyclerView.Adapter<DrawerItemHolder>() {
 
   val selectSubscription: BehaviorSubject<Int> = BehaviorSubject.createDefault(startPosition)
 

@@ -51,6 +51,7 @@ class MainActivity : AppCompatActivity(), BaseNavigator {
 
   override fun showScreen(controller: Controller, addToBackStack: Boolean) {
     val transaction = RouterTransaction.with(controller)
+    transaction.tag(controller.javaClass.simpleName)
     if (addToBackStack) {
       router!!.pushController(transaction)
     } else {

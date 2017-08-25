@@ -35,18 +35,20 @@ class ScoreCreationController(
   }
 
   override fun setScore(scoreData: Score?) {
-    if(scoreData?.id != null){
-      view.creation_fab.setImageResource(R.drawable.ic_check)
-      activity?.title = "Edit Score"
-    } else {
-      activity?.title = "New Score"
-    }
-    operationScore = scoreData ?: Score()
-    view.field_list.layoutManager = LinearLayoutManager(activity)
-    view.field_list.adapter = ScoreFieldAdapter(operationScore)
-    view.creation_fab.setOnClickListener {
-      presenter.processScore(operationScore, OPEN)
-      router.handleBack()
+    activity?.runOnUiThread {
+      if (scoreData?.id != null) {
+        view.creation_fab.setImageResource(R.drawable.ic_check)
+        activity?.title = "Edit Score"
+      } else {
+        activity?.title = "New Score"
+      }
+      operationScore = scoreData ?: Score()
+      view.field_list.layoutManager = LinearLayoutManager(activity)
+      view.field_list.adapter = ScoreFieldAdapter(operationScore)
+      view.creation_fab.setOnClickListener {
+        presenter.processScore(operationScore, OPEN)
+        router.handleBack()
+      }
     }
   }
 

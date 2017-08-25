@@ -15,7 +15,7 @@
 - [X] Score editing
 
 ### v0.3
-- [ ] Score syncronization with backend
+- [ ] Score synchronization with backend
 - [ ] Score analytics
 - [ ] Show similar scores on auto complete
 

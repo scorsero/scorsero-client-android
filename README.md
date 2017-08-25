@@ -15,7 +15,9 @@
 - [X] Score editing
 
 ### v0.3
-//TODO
+- [ ] Score synchronization with backend
+- [ ] Score analytics
+- [ ] Show similar scores on auto complete
 
 ### Backlog
 - Score approving

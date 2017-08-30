@@ -34,21 +34,27 @@ android {
 }
 
 ext {
-  arch_version = '1.0.0-alpha5'
-  support_version = ''
+  arch_version = '1.0.0-alpha9'
+  support_version = '26.0.0-alpha1'
 }
 
 dependencies {
   implementation fileTree(dir: 'libs', include: ['*.jar'])
   implementation "org.jetbrains.kotlin:kotlin-stdlib-jre7:$kotlin_version"
 
-  implementation "android.arch.lifecycle:runtime:$arch_version"
-  implementation "android.arch.lifecycle:extensions:$arch_version"
-  implementation "android.arch.persistence.room:runtime:$arch_version"
-  implementation "android.arch.persistence.room:rxjava2:$arch_version"
-  implementation 'com.android.support:appcompat-v7:26.0.0-alpha1'
-  implementation 'com.android.support:recyclerview-v7:26.0.0-alpha1'
-  implementation 'com.android.support:design:26.0.0-alpha1'
+  ["lifecycle:runtime",
+   "lifecycle:extensions",
+   "persistence.room:runtime",
+   "persistence.room:rxjava2"].each {
+    implementation "android.arch.$it:$arch_version"
+  }
+
+  ["appcompat-v7",
+   "recyclerview-v7",
+   "design"].each {
+    implementation "com.android.support:$it:$support_version"
+  }
+
   implementation 'com.android.support.constraint:constraint-layout:1.0.2'
   annotationProcessor "android.arch.persistence.room:compiler:$arch_version"
   annotationProcessor "android.arch.lifecycle:compiler:$arch_version"
@@ -78,7 +84,8 @@ dependencies {
 }
 
 
-task clearAppCache(type:Exec) {
-  commandLine android.getAdbExecutable().absolutePath, 'shell', 'pm', 'clear', android.defaultConfig.applicationId
+task clearAppCache(type: Exec) {
+  commandLine android.getAdbExecutable().absolutePath, 'shell', 'pm', 'clear',
+      android.defaultConfig.applicationId
 }
 

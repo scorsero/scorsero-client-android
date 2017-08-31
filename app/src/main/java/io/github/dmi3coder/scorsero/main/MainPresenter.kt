@@ -1,8 +1,10 @@
 package io.github.dmi3coder.scorsero.main
 
+import io.github.dmi3coder.scorsero.MainApplication
 import io.github.dmi3coder.scorsero.data.Score
 import io.github.dmi3coder.scorsero.data.source.ScoreRepository
 import org.joda.time.Interval
+import javax.inject.Inject
 
 
 /**
@@ -12,10 +14,11 @@ class MainPresenter(var view: MainContract.View,
     val interval: Interval,
     var title: String? = null) : MainContract.Presenter {
 
+  @Inject
   lateinit var repository: ScoreRepository
 
   override fun start() {
-    repository = ScoreRepository.getInstance()
+    MainApplication.mainComponent.inject(this)
     subscribeScores(interval)
     view.setDate(title ?: interval.start.toString("dd MMM YYYY"))
   }

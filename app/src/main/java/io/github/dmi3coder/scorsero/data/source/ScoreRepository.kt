@@ -9,14 +9,16 @@ import io.reactivex.Flowable
 import io.reactivex.Single
 import org.joda.time.DateTime
 import org.joda.time.Interval
+import javax.inject.Inject
+import javax.inject.Singleton
 import kotlin.reflect.KFunction1
 
 /**
  * Created by dim3coder on 9:55 AM 7/16/17.
  */
 
-
-class ScoreRepository(val local: ScoreDataSource) {
+@Singleton
+class ScoreRepository @Inject constructor(val local: ScoreDataSource) {
 
 
   fun getAllScores(): Single<List<Score>> {
@@ -69,7 +71,7 @@ class ScoreRepository(val local: ScoreDataSource) {
 
   companion object {
     private lateinit var INSTANCE: ScoreRepository
-    internal lateinit var scoreDatabase: ScoreDatabase
+    lateinit var scoreDatabase: ScoreDatabase
 
     @JvmStatic fun getInstance(): ScoreRepository {
       return INSTANCE

@@ -11,7 +11,7 @@ import org.joda.time.Interval
 data class NavigationItem(
     @StringRes val name: Int,
     val range: Interval,
-    val repository: ScoreRepository = ScoreRepository.getInstance()
+    val repository: ScoreRepository
 ) {
   val itemCount: Flowable<Int> = repository.subscribeElementCountFor(range)
 

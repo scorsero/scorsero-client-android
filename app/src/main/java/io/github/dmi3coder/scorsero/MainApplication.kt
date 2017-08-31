@@ -5,7 +5,6 @@ import android.content.Context
 import com.facebook.stetho.Stetho
 import dagger.Module
 import dagger.Provides
-import io.github.dmi3coder.scorsero.data.source.ScoreRepository
 import javax.inject.Singleton
 
 /**
@@ -15,7 +14,6 @@ class MainApplication : Application() {
 
   override fun onCreate() {
     super.onCreate()
-    ScoreRepository.init(this)
     Stetho.initializeWithDefaults(this)
     mainComponent = DaggerMainComponent.builder()
         .mainApplicationModule(MainApplicationModule(this))

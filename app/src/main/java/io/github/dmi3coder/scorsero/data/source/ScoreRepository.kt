@@ -11,6 +11,7 @@ import org.joda.time.DateTime
 import org.joda.time.Interval
 import javax.inject.Inject
 import javax.inject.Singleton
+import kotlin.DeprecationLevel.WARNING
 import kotlin.reflect.KFunction1
 
 /**
@@ -41,8 +42,8 @@ class ScoreRepository @Inject constructor(val local: ScoreDataSource) {
     return Flowable.fromPublisher(local.subscribeScoresFor(interval))
   }
 
-  fun subscribeElementCountFor(interval: Interval): Flowable<Int>{
-    return this.subscribeElementCountFor(interval.start,interval.end)
+  fun subscribeElementCountFor(interval: Interval): Flowable<Int> {
+    return this.subscribeElementCountFor(interval.start, interval.end)
   }
 
   fun subscribeElementCountFor(fromDate: DateTime, toDate: DateTime): Flowable<Int> {
@@ -73,10 +74,14 @@ class ScoreRepository @Inject constructor(val local: ScoreDataSource) {
     private lateinit var INSTANCE: ScoreRepository
     lateinit var scoreDatabase: ScoreDatabase
 
+    @Deprecated(message = "Dagger introduced",
+        replaceWith = ReplaceWith("@Inject ScoreRepository"),
+        level = WARNING)
     @JvmStatic fun getInstance(): ScoreRepository {
       return INSTANCE
     }
 
+    @Deprecated(message = "Dagger introduced, please remove any initialization", level = WARNING)
     @JvmStatic fun init(applicationContext: Context) {
       scoreDatabase = Room.databaseBuilder(applicationContext,
           ScoreDatabase::class.java, "score").build()

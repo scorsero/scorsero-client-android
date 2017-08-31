@@ -2,7 +2,9 @@ package io.github.dmi3coder.scorsero
 
 import android.support.test.InstrumentationRegistry
 import android.support.test.runner.AndroidJUnit4
+import org.hamcrest.CoreMatchers
 import org.junit.Assert.assertEquals
+import org.junit.Assert.assertThat
 import org.junit.Test
 import org.junit.runner.RunWith
 
@@ -17,6 +19,6 @@ class ExampleInstrumentedTest {
   fun useAppContext() {
     // Context of the app under test.
     val appContext = InstrumentationRegistry.getTargetContext()
-    assertEquals("io.github.dmi3coder.scorsero", appContext.packageName)
+    assertThat(appContext.packageName, CoreMatchers.containsString("io.github.dmi3coder.scorsero"))
   }
 }

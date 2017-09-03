@@ -11,7 +11,7 @@ import javax.inject.Singleton
 /**
  * Created by dim3coder on 5:33 PM 8/31/17.
  */
-@Module class LocalSourceModule {
+@Module class LocalDataSourceModule {
 
   @Provides @Singleton internal fun provideScoreDatabase(context: Context): ScoreDatabase =
       Room.databaseBuilder(context, ScoreDatabase::class.java, "score").build()

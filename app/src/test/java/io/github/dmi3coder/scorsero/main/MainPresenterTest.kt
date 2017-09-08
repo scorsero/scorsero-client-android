@@ -11,6 +11,7 @@ import android.view.View
 import android.widget.ImageButton
 import android.widget.Toolbar
 import com.github.debop.kodatimes.startOfDay
+import com.nhaarman.mockito_kotlin.argumentCaptor
 import io.github.dmi3coder.scorsero.data.Score
 import io.github.dmi3coder.scorsero.data.source.ScoreRepository
 import io.reactivex.Flowable
@@ -91,6 +92,14 @@ class MainPresenterTest {
     verify(scoreRepository).update(scoreCaptor.capture())
     assertThat(scoreCaptor.firstValue.completed, `is`(true))
     assertThat(scoreCaptor.firstValue.title, `is`("Today Task"))
+  }
+
+  @Test
+  fun deleteScore_scoreDeleted() {
+    val scoreCaptor = argumentCaptor<Score>()
+    mainPresenter.removeScore(TASKS[0])
+    verify(scoreRepository).delete(scoreCaptor.capture())
+    assertThat(scoreCaptor.firstValue.title, `is`(TASKS[0].title))
   }
 
   @After fun tearDown() {}

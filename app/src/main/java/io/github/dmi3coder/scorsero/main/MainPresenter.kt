@@ -19,7 +19,7 @@ class MainPresenter(var view: MainContract.View,
 
   override fun start() {
     subscribeScores(interval)
-    var comparableInterval = Interval(interval).apply { this.end.minusMillis(1) }
+    var comparableInterval = Interval(interval.start,interval.end.minusMillis(1))
     if (title == null) {
       var toList = comparableInterval.days().toList()
       if (comparableInterval.containsNow() && toList.size == 1) {

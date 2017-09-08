@@ -52,10 +52,14 @@ class MainPresenterTest {
   }
 
   @Test
+  fun injectMocks_mainPresenterInjected() {
+    assertThat(mainPresenter.repository, `is`(scoreRepository))
+  }
+
+  @Test
   fun startMainPresenter_displayingDate() {
     mainPresenter.start()
     Mockito.verify(mainView).setDate("08 Sep 2016")
-    assertThat(mainPresenter.repository, `is`(scoreRepository))
   }
 
   @Test
@@ -63,7 +67,6 @@ class MainPresenterTest {
     initPresenterWithInterval(elighableIntervals[1])
     mainPresenter.start()
     Mockito.verify(mainView).setDate("Today")
-    assertThat(mainPresenter.repository, `is`(scoreRepository))
   }
 
   @Test

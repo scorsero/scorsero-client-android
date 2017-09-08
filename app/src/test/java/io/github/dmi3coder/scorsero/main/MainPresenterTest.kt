@@ -87,7 +87,8 @@ class MainPresenterTest {
 
   @Test
   fun completeScore_scoreCompleted() {
-    val scoreCaptor = com.nhaarman.mockito_kotlin.argumentCaptor<Score>()
+    TASKS[0].completed = false // just to be sure that any other test method haven't changed score
+    val scoreCaptor = argumentCaptor<Score>()
     mainPresenter.completeScore(TASKS[0])
     verify(scoreRepository).update(scoreCaptor.capture())
     assertThat(scoreCaptor.firstValue.completed, `is`(true))

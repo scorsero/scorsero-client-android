@@ -19,7 +19,7 @@ class MainPresenter(var view: MainContract.View,
 
   override fun start() {
     subscribeScores(interval)
-    var comparableInterval = Interval(interval.start,interval.end.minusMillis(1))
+    var comparableInterval = Interval(interval.start, interval.end.minusMillis(1))
     if (title == null) {
       var toList = comparableInterval.days().toList()
       if (comparableInterval.containsNow() && toList.size == 1) {
@@ -40,9 +40,7 @@ class MainPresenter(var view: MainContract.View,
     if (score.completed!!) {
       score.completionDate = System.currentTimeMillis()
     }
-    Thread {
-      repository.update(score)
-    }.start()
+    repository.update(score)
   }
 
   override fun editScore(score: Score) {
@@ -50,9 +48,7 @@ class MainPresenter(var view: MainContract.View,
   }
 
   override fun removeScore(score: Score) {
-    Thread {
       repository.delete(score)
-    }.start()
   }
 
   override fun restoreTitle(title: String?) {

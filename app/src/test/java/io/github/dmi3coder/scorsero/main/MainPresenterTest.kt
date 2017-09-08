@@ -11,10 +11,11 @@ import android.view.View
 import android.widget.ImageButton
 import android.widget.Toolbar
 import com.github.debop.kodatimes.startOfDay
-import io.github.dmi3coder.scorsero.MainComponent
 import io.github.dmi3coder.scorsero.data.Score
 import io.github.dmi3coder.scorsero.data.source.ScoreRepository
 import io.reactivex.Flowable
+import org.hamcrest.CoreMatchers.allOf
+import org.hamcrest.CoreMatchers.notNullValue
 import org.hamcrest.Matcher
 import org.joda.time.DateTime
 import org.joda.time.Interval
@@ -25,6 +26,8 @@ import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.mockito.Answers
+import org.mockito.ArgumentMatchers
+import org.mockito.Captor
 import org.mockito.InjectMocks
 import org.mockito.Mock
 import org.mockito.Mockito
@@ -81,6 +84,15 @@ class MainPresenterTest {
     }
   }
 
+  @Test
+  fun completeScore_scoreCompleted() {
+    val scoreCaptor = com.nhaarman.mockito_kotlin.argumentCaptor<Score>()
+    mainPresenter.completeScore(TASKS[0])
+    verify(scoreRepository).update(scoreCaptor.capture())
+    assertThat(scoreCaptor.firstValue.completed, `is`(true))
+    assertThat(scoreCaptor.firstValue.title, `is`("Today Task"))
+  }
+
   @After fun tearDown() {}
 
   fun initPresenterWithInterval(interval: Interval) {
@@ -90,7 +102,7 @@ class MainPresenterTest {
 
   companion object {
     var TASKS: List<Score> = listOf(
-        Score(1, "Title", "Description", Date().time, false, null),
+        Score(1, "Today Task", "Description", Date().time, false, null),
         Score(2, "Completed", "Description", DateTime().plusDays(-1).time, true,
             Date().time),
         Score(3, "Title", "Description", Date().time, false, null)

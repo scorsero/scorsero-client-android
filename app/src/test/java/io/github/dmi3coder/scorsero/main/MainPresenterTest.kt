@@ -36,7 +36,6 @@ import java.util.Date
 /**
  * Created by dim3coder on 8:48 AM 9/8/17.
  */
-@RunWith(MockitoJUnitRunner::class)
 class MainPresenterTest {
 
   private var scoreRepository: ScoreRepository = mock(ScoreRepository::class.java)
@@ -44,14 +43,23 @@ class MainPresenterTest {
   private var mainView: MainContract.View = mock(MainContract.View::class.java)
 
   @InjectMocks
-  private var mainPresenter: MainPresenter = MainPresenter(mainView, elighableIntervals[0], null)
+  private lateinit var mainPresenter: MainPresenter
 
 
   @Before fun setUp() {
+    initPresenterWithInterval(elighableIntervals[0])
   }
 
   @Test
-  fun loadScoresForDay_loadingIntoView() {
+  fun startMainPresenter_displayingDate() {
+    mainPresenter.start()
+    Mockito.verify(mainView).setDate("08 Sep 2016")
+    assertThat(mainPresenter.repository, `is`(scoreRepository))
+  }
+
+  @Test
+  fun startMainPresenterWithTodayDate_displayingTodaySign() {
+    initPresenterWithInterval(elighableIntervals[1])
     mainPresenter.start()
     Mockito.verify(mainView).setDate("08 Sep 2017")
     assertThat(mainPresenter.repository, `is`(scoreRepository))
@@ -59,6 +67,10 @@ class MainPresenterTest {
 
   @After fun tearDown() {}
 
+  fun initPresenterWithInterval(interval: Interval) {
+    mainPresenter = MainPresenter(mainView, interval, null)
+    MockitoAnnotations.initMocks(this)
+  }
 
   companion object {
     var TASKS: List<Score> = listOf(
@@ -68,7 +80,9 @@ class MainPresenterTest {
         Score(3, "Title", "Description", Date().time, false, null)
     )
     var elighableIntervals: List<Interval> = listOf(
-        Interval(DateTime().startOfDay(), DateTime(2017,9,8,0,0).plusDays(1).startOfDay())
+        Interval(DateTime(2016, 9, 8, 0, 0).startOfDay(),
+            DateTime(2016, 9, 8, 0, 0).plusDays(1).startOfDay()),
+        Interval(DateTime().startOfDay(), DateTime().plusDays(1).startOfDay())
     )
   }
 }

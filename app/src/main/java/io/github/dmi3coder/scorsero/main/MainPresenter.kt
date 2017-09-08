@@ -18,7 +18,6 @@ class MainPresenter(var view: MainContract.View,
   lateinit var repository: ScoreRepository
 
   override fun start() {
-    MainApplication.mainComponent.inject(this)
     subscribeScores(interval)
     view.setDate(title ?: interval.start.toString("dd MMM YYYY"))
   }

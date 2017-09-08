@@ -11,6 +11,7 @@ import com.bluelinelabs.conductor.Controller
 import com.bluelinelabs.conductor.Router
 import com.bluelinelabs.conductor.RouterTransaction
 import io.github.dmi3coder.scorsero.BuildConfig
+import io.github.dmi3coder.scorsero.MainApplication
 import io.github.dmi3coder.scorsero.R
 import io.github.dmi3coder.scorsero.data.Score
 import io.github.dmi3coder.scorsero.main.MainContract.Presenter
@@ -56,7 +57,9 @@ class MainController : Controller(), MainContract.View {
     if (argTitle != 0) {
       title = activity!!.getString(argTitle)
     }
-    presenter = MainPresenter(this, interval!!, title)
+    var mainPresenter = MainPresenter(this, interval!!, title)
+    MainApplication.mainComponent.inject(mainPresenter)
+    presenter = mainPresenter
     return view
   }
 

@@ -1,6 +1,6 @@
 package io.github.dmi3coder.scorsero.main
 
-import io.github.dmi3coder.scorsero.MainApplication
+import com.github.debop.kodatimes.days
 import io.github.dmi3coder.scorsero.data.Score
 import io.github.dmi3coder.scorsero.data.source.ScoreRepository
 import org.joda.time.Interval
@@ -19,7 +19,16 @@ class MainPresenter(var view: MainContract.View,
 
   override fun start() {
     subscribeScores(interval)
-    view.setDate(title ?: interval.start.toString("dd MMM YYYY"))
+    var comparableInterval = Interval(interval).apply { this.end.minusMillis(1) }
+    if (title == null) {
+      var toList = comparableInterval.days().toList()
+      if (comparableInterval.containsNow() && toList.size == 1) {
+        title = "Today"
+      } else {
+        title = comparableInterval.start.toString("dd MMM YYYY")
+      }
+    }
+    view.setDate(title)
   }
 
   private fun subscribeScores(interval: Interval) {
@@ -47,7 +56,7 @@ class MainPresenter(var view: MainContract.View,
   }
 
   override fun restoreTitle(title: String?) {
-   this.title = title
+    this.title = title
   }
 
   init {

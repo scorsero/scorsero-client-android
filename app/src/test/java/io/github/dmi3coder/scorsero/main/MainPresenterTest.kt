@@ -14,6 +14,7 @@ import com.github.debop.kodatimes.startOfDay
 import io.github.dmi3coder.scorsero.MainComponent
 import io.github.dmi3coder.scorsero.data.Score
 import io.github.dmi3coder.scorsero.data.source.ScoreRepository
+import io.reactivex.Flowable
 import org.hamcrest.Matcher
 import org.joda.time.DateTime
 import org.joda.time.Interval
@@ -61,8 +62,20 @@ class MainPresenterTest {
   fun startMainPresenterWithTodayDate_displayingTodaySign() {
     initPresenterWithInterval(elighableIntervals[1])
     mainPresenter.start()
-    Mockito.verify(mainView).setDate("08 Sep 2017")
+    Mockito.verify(mainView).setDate("Today")
     assertThat(mainPresenter.repository, `is`(scoreRepository))
+  }
+
+  @Test
+  fun startMainPresenter_subscribeForDay() {
+    elighableIntervals[0].apply {
+      val flowable = Flowable.fromArray(
+          TASKS.filter { this.contains(DateTime(it.creationDate!!)) }.toList()
+      )
+      `when`(scoreRepository.subscribeScoresFor(this)).thenReturn(flowable)
+      mainPresenter.start()
+      verify(mainView).showScores(flowable)
+    }
   }
 
   @After fun tearDown() {}
@@ -75,7 +88,7 @@ class MainPresenterTest {
   companion object {
     var TASKS: List<Score> = listOf(
         Score(1, "Title", "Description", Date().time, false, null),
-        Score(2, "Completed", "Description", DateTime().plusDays(-1).toDate().time, true,
+        Score(2, "Completed", "Description", DateTime().plusDays(-1).time, true,
             Date().time),
         Score(3, "Title", "Description", Date().time, false, null)
     )
@@ -86,3 +99,6 @@ class MainPresenterTest {
     )
   }
 }
+
+val DateTime.time: Long
+  get() = this.toDate().time

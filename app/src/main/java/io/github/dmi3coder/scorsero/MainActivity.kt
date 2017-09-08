@@ -7,6 +7,7 @@ import com.bluelinelabs.conductor.Conductor
 import com.bluelinelabs.conductor.Controller
 import com.bluelinelabs.conductor.Router
 import com.bluelinelabs.conductor.RouterTransaction
+import com.github.debop.kodatimes.startOfDay
 import io.github.dmi3coder.scorsero.main.MainController
 import io.github.dmi3coder.scorsero.navigation.DrawerController
 import kotlinx.android.synthetic.main.activity_main.drawer_frame
@@ -43,7 +44,7 @@ class MainActivity : AppCompatActivity(), BaseNavigator {
           MainController().apply {
             this.args.putSerializable(
                 MainController.CURRENT_DATE_RANGE,
-                Interval(DateTime(), DateTime()))
+                Interval(DateTime(), DateTime().plusDays(1).startOfDay().minusMillis(1)))
           }
       ))
     }

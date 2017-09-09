@@ -52,7 +52,7 @@ class MainPresenterTest {
 
 
   @Before fun setUp() {
-    initPresenterWithInterval(elighableIntervals[0])
+    initPresenterWithInterval(eligibleIntervals[0])
   }
 
   @Test
@@ -66,16 +66,27 @@ class MainPresenterTest {
     Mockito.verify(mainView).setDate("08 Sep 2016")
   }
 
+  /**
+   * Presenter is responsible for zero-time intervals
+   * e.g 15:30:50 - 15:30:50
+   */
+  @Test
+  fun startMainPresenterWith0Interval_displayingDate() {
+    initPresenterWithInterval(eligibleIntervals[2])
+    mainPresenter.start()
+    Mockito.verify(mainView).setDate("Today")
+  }
+
   @Test
   fun startMainPresenterWithTodayDate_displayingTodaySign() {
-    initPresenterWithInterval(elighableIntervals[1])
+    initPresenterWithInterval(eligibleIntervals[1])
     mainPresenter.start()
     Mockito.verify(mainView).setDate("Today")
   }
 
   @Test
   fun startMainPresenter_subscribeForDay() {
-    elighableIntervals[0].apply {
+    eligibleIntervals[0].apply {
       val flowable = Flowable.fromArray(
           TASKS.filter { this.contains(DateTime(it.creationDate!!)) }.toList()
       )
@@ -117,10 +128,11 @@ class MainPresenterTest {
             Date().time),
         Score(3, "Title", "Description", Date().time, false, null)
     )
-    var elighableIntervals: List<Interval> = listOf(
+    var eligibleIntervals: List<Interval> = listOf(
         Interval(DateTime(2016, 9, 8, 0, 0).startOfDay(),
             DateTime(2016, 9, 8, 0, 0).plusDays(1).startOfDay()),
-        Interval(DateTime().startOfDay(), DateTime().plusDays(1).startOfDay())
+        Interval(DateTime().startOfDay(), DateTime().plusDays(1).startOfDay()),
+        Interval(DateTime(), DateTime())
     )
   }
 }

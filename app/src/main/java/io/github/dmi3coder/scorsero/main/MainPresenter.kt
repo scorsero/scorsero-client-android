@@ -1,8 +1,10 @@
 package io.github.dmi3coder.scorsero.main
 
 import com.github.debop.kodatimes.days
+import com.github.debop.kodatimes.startOfDay
 import io.github.dmi3coder.scorsero.data.Score
 import io.github.dmi3coder.scorsero.data.source.ScoreRepository
+import org.joda.time.DateTime
 import org.joda.time.Interval
 import javax.inject.Inject
 
@@ -19,10 +21,18 @@ class MainPresenter(var view: MainContract.View,
 
   override fun start() {
     subscribeScores(interval)
-    var comparableInterval = Interval(interval.start, interval.end.minusMillis(1))
+    var comparableInterval: Interval
+    try {
+      comparableInterval = Interval(interval.start, interval.end.minusMillis(1))
+    } catch (e: IllegalArgumentException) {
+      comparableInterval = interval
+    }
+
     if (title == null) {
-      var toList = comparableInterval.days().toList()
-      if (comparableInterval.containsNow() && toList.size == 1) {
+      val toList = comparableInterval.days().toList()
+      val todayInterval = Interval(DateTime().startOfDay(),
+          DateTime().plusDays(1).startOfDay().minusMillis(1))
+      if ((interval.containsNow() || todayInterval.contains(interval)) && toList.size == 1) {
         title = "Today"
       } else {
         title = comparableInterval.start.toString("dd MMM YYYY")
@@ -48,7 +58,7 @@ class MainPresenter(var view: MainContract.View,
   }
 
   override fun removeScore(score: Score) {
-      repository.delete(score)
+    repository.delete(score)
   }
 
   override fun restoreTitle(title: String?) {

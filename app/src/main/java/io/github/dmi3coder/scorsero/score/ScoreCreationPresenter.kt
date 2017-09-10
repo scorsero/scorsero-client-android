@@ -23,7 +23,6 @@ class ScoreCreationPresenter(
   }
 
   override fun start(score: Score) {
-    MainApplication.mainComponent.inject(this)
     operationScore = score
     view.setPresenter(this)
     view.setScore(operationScore)

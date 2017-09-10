@@ -100,6 +100,7 @@ class MainController : Controller(), MainContract.View {
     bottomSheetRouter = Conductor.attachRouter(activity!!, view.bottom_sheet_frame,
         args)
     bottomSheetRouter!!.setRoot(RouterTransaction.with(scoreStarterController))
+    MainApplication.mainComponent.inject(scoreStarterPresenter)
     scoreStarterPresenter.start()
   }
 

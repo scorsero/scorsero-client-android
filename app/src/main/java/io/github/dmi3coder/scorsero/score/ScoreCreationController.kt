@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.bluelinelabs.conductor.Controller
+import io.github.dmi3coder.scorsero.MainApplication
 import io.github.dmi3coder.scorsero.R
 import io.github.dmi3coder.scorsero.data.Score
 import io.github.dmi3coder.scorsero.score.ScoreCreationContract.Presenter
@@ -22,7 +23,9 @@ class ScoreCreationController(
 
   override fun onCreateView(inflater: LayoutInflater, container: ViewGroup): View {
     view = inflater.inflate(R.layout.controller_score_creation, container, false)
-    ScoreCreationPresenter(this).start(operationScore)
+    var scoreCreationPresenter = ScoreCreationPresenter(this)
+    MainApplication.mainComponent.inject(scoreCreationPresenter)
+    scoreCreationPresenter.start(operationScore)
     return view
   }
 

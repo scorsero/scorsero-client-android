@@ -26,7 +26,8 @@ class NavigationPresenter(var view: View,
         NavigationItem(
             R.string.drawer_options_todo,
             Interval(DateTime(0), DateTime.now()),
-            repository
+            repository,
+            showCompleted = false
         ))
     navigationItems.add(
         NavigationItem(
@@ -55,6 +56,7 @@ class NavigationPresenter(var view: View,
     val controller = MainController()
     controller.args.apply {
       putSerializable(MainController.CURRENT_DATE_RANGE, item.range)
+      putBoolean(MainController.SHOW_COMPLETED, item.showCompleted)
       putInt(MainController.CURRENT_TITLE, item.name)
     }
     baseNavigator.showScreen(controller)

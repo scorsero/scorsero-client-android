@@ -57,7 +57,8 @@ class MainController : Controller(), MainContract.View {
     if (argTitle != 0) {
       title = activity!!.getString(argTitle)
     }
-    var mainPresenter = MainPresenter(this, interval!!, title)
+    var showCompleted: Boolean = args.getBoolean(SHOW_COMPLETED, true)
+    val mainPresenter = MainPresenter(this, interval!!, title, showCompleted)
     MainApplication.mainComponent.inject(mainPresenter)
     presenter = mainPresenter
     return view
@@ -142,5 +143,6 @@ class MainController : Controller(), MainContract.View {
     const val BOTTOM_SHEET_STATE = "${BuildConfig.APPLICATION_ID}.main.BOTTOM_SHEET_STATE"
     const val CURRENT_DATE_RANGE = "${BuildConfig.APPLICATION_ID}.main.CURRENT_DATE_RANGE"
     const val CURRENT_TITLE = "${BuildConfig.APPLICATION_ID}.main.CURRENT_TITLE"
+    const val SHOW_COMPLETED = "${BuildConfig.APPLICATION_ID}.main.SHOW_COMPLETED"
   }
 }

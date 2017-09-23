@@ -42,9 +42,13 @@ class MainActivity : AppCompatActivity(), BaseNavigator {
     if (!router!!.hasRootController()) {
       router!!.setRoot(RouterTransaction.with(
           MainController().apply {
-            this.args.putSerializable(
-                MainController.CURRENT_DATE_RANGE,
-                Interval(DateTime(), DateTime().plusDays(1).startOfDay().minusMillis(1)))
+            this.args.apply {
+              putInt(MainController.CURRENT_TITLE, R.string.drawer_options_todo)
+              putSerializable(
+                  MainController.CURRENT_DATE_RANGE,
+                  Interval(DateTime(0), DateTime().plusDays(1).startOfDay().minusMillis(1)))
+              putBoolean(MainController.SHOW_COMPLETED, false)
+            }
           }
       ))
     }

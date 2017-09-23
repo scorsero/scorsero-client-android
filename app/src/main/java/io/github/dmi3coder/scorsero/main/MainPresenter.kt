@@ -4,6 +4,7 @@ import com.github.debop.kodatimes.days
 import com.github.debop.kodatimes.startOfDay
 import io.github.dmi3coder.scorsero.data.Score
 import io.github.dmi3coder.scorsero.data.source.ScoreRepository
+import io.reactivex.Flowable
 import org.joda.time.DateTime
 import org.joda.time.Interval
 import javax.inject.Inject
@@ -14,7 +15,8 @@ import javax.inject.Inject
  */
 class MainPresenter(var view: MainContract.View,
     val interval: Interval,
-    var title: String? = null) : MainContract.Presenter {
+    var title: String? = null,
+    var showCompleted: Boolean = true) : MainContract.Presenter {
 
   @Inject
   lateinit var repository: ScoreRepository
@@ -42,7 +44,13 @@ class MainPresenter(var view: MainContract.View,
   }
 
   private fun subscribeScores(interval: Interval) {
-    view.showScores(repository.subscribeScoresFor(interval))
+    var scores = repository.subscribeScoresFor(interval)
+    if (!showCompleted) {
+      scores = scores.flatMap {
+        Flowable.fromIterable(it).filter { !(it.completed ?: false) }.toList().toFlowable()
+      }
+    }
+    view.showScores(scores)
   }
 
   override fun completeScore(score: Score) {

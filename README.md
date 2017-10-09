@@ -1,5 +1,13 @@
 # Scorsero [![CircleCI](https://circleci.com/gh/scorsero/scorsero-client-android/tree/master.svg?style=svg)](https://circleci.com/gh/scorsero/scorsero-client-android/tree/master)
 
+## About
+Scorsero provides a new way of productivity tracking. It can be used as a simple to-do app, but in some small tweaks can be transformed into a powerful machine that can route you to your target.
+
+**This app is in planning mode, suggest your ideas or comment on existing ones via issues.**
+
+## How it works
+![Scorsero workflow](https://github.com/scorsero/scorsero-client-android/blob/master/scorsero_flow.png)
+Basically, application will collect your daily routine via scores(tasks), track finished scores and do it continuously while you're using this app as a simple todo app. Next step is to analyze all collected data and specify what do you want to accomplish(e.g increase productivity by 20%), it will give you suggestions based on your targets.
 
 ## Roadmap
 

@@ -22,6 +22,9 @@ class Score() {
   @ColumnInfo(name = "creation_date")
   var creationDate: Long? = null
 
+  @ColumnInfo(name = "creation_position")
+  var creationPosition: GeoLocation? = null
+
   var completed: Boolean? = null
 
   @ColumnInfo(name = "completion_date")

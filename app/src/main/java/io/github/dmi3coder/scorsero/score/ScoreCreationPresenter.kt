@@ -1,6 +1,6 @@
 package io.github.dmi3coder.scorsero.score
 
-import io.github.dmi3coder.scorsero.MainApplication
+import io.github.dmi3coder.scorsero.data.GeoLocation
 import io.github.dmi3coder.scorsero.data.Score
 import io.github.dmi3coder.scorsero.data.source.ScoreRepository
 import io.github.dmi3coder.scorsero.score.ScoreCreationContract.ViewState
@@ -29,7 +29,10 @@ class ScoreCreationPresenter(
   }
 
   override fun processScore(scoreData: Score?, state: ViewState) {
-    if (scoreData!!.creationDate == null) scoreData.creationDate = Date().time
+    if (scoreData!!.creationDate == null){
+      scoreData.creationDate = Date().time
+      scoreData.creationPosition = view.getLastLocation().run { GeoLocation(this?.latitude,this?.longitude) }
+    }
     if (scoreData.id == null) {
       repository.insert(scoreData)
     } else {

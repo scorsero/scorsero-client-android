@@ -1,5 +1,8 @@
 package io.github.dmi3coder.scorsero.score
 
+import android.annotation.SuppressLint
+import android.location.Location
+import android.location.LocationManager
 import android.support.v7.widget.LinearLayoutManager
 import android.view.LayoutInflater
 import android.view.View
@@ -12,6 +15,7 @@ import io.github.dmi3coder.scorsero.score.ScoreCreationContract.Presenter
 import io.github.dmi3coder.scorsero.score.ScoreCreationContract.ViewState.OPEN
 import kotlinx.android.synthetic.main.controller_score_creation.view.creation_fab
 import kotlinx.android.synthetic.main.controller_score_creation.view.field_list
+import android.content.Context.LOCATION_SERVICE
 
 /**
  * Created by dim3coder on 10:28 PM 7/18/17.
@@ -54,6 +58,14 @@ class ScoreCreationController(
       }
     }
   }
+
+  @SuppressLint("MissingPermission")
+  override fun getLastLocation(): Location? {
+    val locationManager = applicationContext!!.getSystemService(LOCATION_SERVICE) as LocationManager
+
+    return locationManager.getLastKnownLocation(LocationManager.NETWORK_PROVIDER)
+  }
+
 
   override fun clear() {
     setScore(null)

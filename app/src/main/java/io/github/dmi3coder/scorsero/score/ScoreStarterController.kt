@@ -1,9 +1,11 @@
 package io.github.dmi3coder.scorsero.score
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.content.res.Resources
 import android.graphics.Color
 import android.graphics.drawable.GradientDrawable
+import android.location.Location
 import android.support.design.widget.BottomSheetBehavior
 import android.support.design.widget.BottomSheetBehavior.BottomSheetCallback
 import android.view.LayoutInflater
@@ -21,6 +23,8 @@ import io.github.dmi3coder.scorsero.score.ScoreCreationContract.ViewState.CLOSED
 import io.github.dmi3coder.scorsero.utils.hideKeyboard
 import kotlinx.android.synthetic.main.controller_score_starter.view.priority_holder
 import kotlinx.android.synthetic.main.controller_score_starter.view.title_field
+import android.location.LocationManager
+import android.content.Context.LOCATION_SERVICE
 
 
 /**
@@ -70,6 +74,13 @@ class ScoreStarterController() : Controller(), ScoreCreationContract.View, OnCli
     scoreToState(scoreData)
   }
 
+  @SuppressLint("MissingPermission")
+  override fun getLastLocation(): Location? {
+    val locationManager = applicationContext!!.getSystemService(LOCATION_SERVICE) as LocationManager
+
+    return locationManager.getLastKnownLocation(LocationManager.NETWORK_PROVIDER)
+  }
+
 
   fun scoreToState(scoreData: Score?) {
     activity!!.runOnUiThread {
@@ -102,7 +113,7 @@ class ScoreStarterController() : Controller(), ScoreCreationContract.View, OnCli
     activity?.runOnUiThread {
       view!!.title_field.text = null
       val priority_holder = view!!.priority_holder
-      for(itemPosition in 0.rangeTo(priority_holder.childCount - 1)){
+      for (itemPosition in 0.rangeTo(priority_holder.childCount - 1)) {
         priority_holder.getChildAt(itemPosition).setStrokeColor(0)
       }
     }
@@ -151,9 +162,10 @@ val Int.px: Int
   get() = (this * Resources.getSystem().displayMetrics.density).toInt()
 
 
-fun View.setStrokeColor(strokeColor: Int){
+fun View.setStrokeColor(strokeColor: Int) {
   (background as GradientDrawable).setStroke(2, strokeColor)
 }
+
 fun View.setColors(fillColor: Int, strokeColor: Int) {
   (background as GradientDrawable).setStroke(2, strokeColor)
   (background as GradientDrawable).setColor(fillColor)

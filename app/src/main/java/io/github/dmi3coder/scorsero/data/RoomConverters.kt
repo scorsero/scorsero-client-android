@@ -9,13 +9,13 @@ import android.arch.persistence.room.TypeConverter
 class RoomConverters {
 
   @TypeConverter
-  fun geopositionFromString(string: String): GeoLocation {
+  fun geoLocationFromString(string: String): GeoLocation {
     var position = string.split(",").map { it.toDoubleOrNull() }
     return GeoLocation(position[0], position[1])
   }
 
   @TypeConverter
-  fun stringToGeoposition(geoLocation: GeoLocation): String {
+  fun stringToGeoLocation(geoLocation: GeoLocation): String {
     val (x, y) = geoLocation
     return "$x,$y"
   }

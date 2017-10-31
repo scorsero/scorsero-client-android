@@ -9,6 +9,12 @@ Scorsero provides a new way of productivity tracking. It can be used as a simple
 ![Scorsero workflow](https://github.com/scorsero/scorsero-client-android/blob/master/scorsero_flow.png)
 Basically, application will collect your daily routine via scores(tasks), track finished scores and do it continuously while you're using this app as a simple todo app. Next step is to analyze all collected data and specify what do you want to accomplish(e.g increase productivity by 20%), it will give you suggestions based on your targets.
 
+## Features
+
+- Collecting your tasks to provide full analysis of your productivity
+- Each task has it's own priority and marked with different colors
+- Each task may be saved and edited by user
+
 ## Roadmap
 
 ### v0.1
@@ -31,4 +37,8 @@ Basically, application will collect your daily routine via scores(tasks), track 
 - Score approving
   - People can create public scores
   - People can assing person(friend) to watch
-  - Assigned people can approve 
+  - Assigned people can approve
+
+### License
+
+[GNU GPL v3](LICENSE)

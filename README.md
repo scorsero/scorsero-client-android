@@ -39,6 +39,6 @@ Basically, application will collect your daily routine via scores(tasks), track 
   - People can assing person(friend) to watch
   - Assigned people can approve
 
-### Licence
+### License
 
 [GNU GPL v3](LICENSE)

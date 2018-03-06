@@ -3,7 +3,12 @@
 ## About
 Scorsero provides a new way of productivity tracking. It can be used as a simple to-do app, but in some small tweaks can be transformed into a powerful machine that can route you to your target.
 
-**This app is in planning mode, suggest your ideas or comment on existing ones via issues.**
+## Dramatic changes
+There'se great list of changes that is specified in SRS. Here's summary of that changes:
+
+- No more users are stupid . Each user knows what he wants and can design process and specify tasks
+- Second-priority user interface conceding to functionality
+- Functionality prior to usability. Even though usability is necessery, we have to give users full spectr of functionality to cover more use cases
 
 ## How it works
 ![Scorsero workflow](https://github.com/scorsero/scorsero-client-android/blob/master/scorsero_flow.png)
@@ -11,34 +16,38 @@ Basically, application will collect your daily routine via scores(tasks), track 
 
 ## Features
 
-- Collecting your tasks to provide full analysis of your productivity
-- Each task has it's own priority and marked with different colors
-- Each task may be saved and edited by user
+* Collecting your tasks to provide full analysis of your productivity
+* Each task has it's own priority and marked with different colors
+* Each task may be saved and edited by user
 
-## Roadmap
+## Roadmap v2
 
-### v0.1
+### 1.1
+- Small BPMN engine for personal usage
 
-- [X] Score creation 
-- [X] Score completion
-- [X] Score displaying
+### 1.2-1.4
+- Processes
+- Process templates
 
-### v0.2
-- [X] Daily score creation with saving
-- [X] Detailed score creation
-- [X] Score editing
+### 1.5
+- Tasks
 
-### v0.3
-- [ ] Score synchronization with backend
-- [ ] Score analytics
-- [ ] Show similar scores on auto complete
+### 1.6
+- Todoist integration: give users ability connect tasks to todoist tasks
 
-### Backlog
-- Score approving
-  - People can create public scores
-  - People can assing person(friend) to watch
-  - Assigned people can approve
+### 1.7
+- Toggl integration: give users ability to track tasks right from Scorsero application.
 
-### License
+### 1.8
+- Todoist-Toggle bridge: Use scorsero as a bridge between Todoist and Toggle
+
+### 1.9
+- More BPMN elements e.g Mail task, Geo task.
+
+### 2.0
+- User interface
+- Analytics
+
+## License
 
 [GNU GPL v3](LICENSE)

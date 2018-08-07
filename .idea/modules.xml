@@ -2,8 +2,8 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/Scorsero.iml" filepath="$PROJECT_DIR$/Scorsero.iml" />
-      <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
+      <module fileurl="file:///media/user/50e0f13c-94b6-447a-b256-8c99a90336e9/home/user/Documents/dmi3coder/Documents/projects/scorsero/scorsero-client-android/app/app.iml" filepath="/media/user/50e0f13c-94b6-447a-b256-8c99a90336e9/home/user/Documents/dmi3coder/Documents/projects/scorsero/scorsero-client-android/app/app.iml" />
+      <module fileurl="file://$PROJECT_DIR$/scorsero-client-android.iml" filepath="$PROJECT_DIR$/scorsero-client-android.iml" />
     </modules>
   </component>
 </project>

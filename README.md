@@ -1,8 +1,5 @@
 # Scorsero [![CircleCI](https://circleci.com/gh/scorsero/scorsero-client-android/tree/master.svg?style=svg)](https://circleci.com/gh/scorsero/scorsero-client-android/tree/master)
 
-## Announcement of termination
-Due to ability to use Flowable BPMN engine and make close integration with Toggl, Todoist etc with custom Tasks or Task handlers, Scorsero is considered obsolete. There will be no more features, improvements or fixes.
-
 ## About
 Scorsero provides a new way of productivity tracking. It can be used as a simple to-do app, but in some small tweaks can be transformed into a powerful machine that can route you to your target.
 
